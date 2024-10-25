@@ -58,6 +58,6 @@ def switch_menu(opcion_juego):
             return "Opción no válida"
 
 menu()
-opcion = int(input("---Selecciona una de las opciones jugador/a---"))
+opcion = int(input("---Selecciona una de las opciones jugador/a---\n"))
 
 switch_menu(opcion)
