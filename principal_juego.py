@@ -32,7 +32,8 @@ def battle(p1, p2):
                       "Justo en la coronilla.",
                       "Eso tiene que doler.",
                       "¿No estaba prohibido dar en los ojos?",
-                      "Cuidado con el.... terraplén."]
+                      "Cuidado con el.... terraplén.",
+                      "Corre insensato"]
 
     probabilidad_golpe = {"espada": 0.6, "arco": 0.5, "hacha": 0.55, "daga": 0.4}
 
