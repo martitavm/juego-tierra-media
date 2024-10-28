@@ -47,33 +47,117 @@ equipamiento = [
 
 
 def buscar_arma(nombre_arma):
+    """
+    Busca un arma en la lista de equipamiento usando su nombre.
+
+    :param nombre_arma: El nombre del arma que queremos encontrar. Se ignoran las mayúsculas, así que
+                        "Espada" y "espada" se consideran iguales.
+    :return: Devuelve un diccionario con la información del arma si se encuentra. Si no se encuentra,
+             retorna un diccionario vacío.
+
+    Nota: Si estás buscando un arma, asegúrate de escribir bien el nombre.
+    """
     for arma in equipamiento:
         if arma["nombre"].lower() == nombre_arma.lower():
             return arma
     return  {}
 
-def anadir_equipamiento(nombre_personaje, nombre_arma):
+def anadir_equipamiento():
+    """
+    Añade un arma al equipamiento de un personaje si este existe y si no la tiene ya.
 
-    if nombre_personaje not in personajes:
-        print(f"El personaje {nombre_personaje} no existe.")
-        return
-    personaje = personajes[nombre_personaje]
-    arma = buscar_arma(nombre_arma)
+    Esta función pregunta al usuario por el nombre del personaje y el nombre del arma que se
+    quiere añadir. Si el personaje no está en la lista, informa al usuario. Si el arma no existe,
+    también lo dice. Además, verifica que el personaje no tenga ya el arma en su equipamiento.
 
-    if not arma:
-        print(f"El arma {nombre_arma} no existe.")
-        return
+    :return: No devuelve nada, pero imprime mensajes con información según la situación.
 
-    for armita in personaje["equipamiento"]:
-        if armita["nombre"].lower() == arma["nombre"].lower():
-            print(f"El personaje {nombre_personaje} ya tiene el arma '{armita['nombre']}' en el equipamiento.")
+    Nota: Asegúrate de que el personaje y el arma estén bien escritos, porque si no,
+          no las podrás añadir. No queremos que un elfo se quede sin su arco favorito.
+    """
+    nombre_personaje = input("Introduce el nombre del personaje: ")
+    nombre_arma = input("Introduce el nombre del arma: ")
+
+    try:
+        if nombre_personaje not in personajes:
+            print(f"El personaje {nombre_personaje} no existe.")
+            return
+        personaje = personajes[nombre_personaje]
+        arma = buscar_arma(nombre_arma)
+
+        if not arma:
+            print(f"El arma {nombre_arma.capitalize()} no existe.")
             return
 
+        for armita in personaje["equipamiento"]:
+            if armita["nombre"].lower() == arma["nombre"].lower():
+                print(f"El personaje {nombre_personaje} ya tiene el arma '{armita['nombre']}' en el equipamiento.")
+                return
 
-    personaje["equipamiento"].append(arma)
-    print(f"El arma '{arma['nombre']}' ha sido añadida al equipamiento del personaje {nombre_personaje}.")
+
+        personaje["equipamiento"].append(arma)
+        print(f"El arma '{arma['nombre']}' ha sido añadida al equipamiento del personaje {nombre_personaje}.")
+
+    except KeyError:
+        print(f"El personaje {nombre_personaje} no existe.")
+
+def ampliar_equipamiento():
+    """
+    Esta función es para los moderadores del juego.
+
+    Registra un nuevo arma en el equipamiento pidiendo al usuario detalles sobre ella.
+
+    Esta función solicita al usuario el nombre, tipo, potencia y descripción del arma que se
+    quiere añadir. Asegura que ninguna de estas entradas esté vacía y que la potencia sea un
+    número entero. Si está correcto, añade el arma al equipamiento y lo confirma con un
+    mensaje.
+
+    :return: No devuelve nada, pero imprime mensajes que indican el estado del registro del arma.
+
+    Nota: Recuerda que la potencia tiene que ser un número entero. Y no olvides que un arma sin nombre
+          es como un guerrero sin espada: ¡no tiene sentido!
+    """
+    campo_relleno = False
+    while not campo_relleno:
+        try:
+            nombre = input("Nombre del arma: ")
+            campo_vacio_exception(nombre)
+            tipo = input("Tipo de arma: ")
+            campo_vacio_exception(tipo)
+            potencia = int(input("Potencia: "))
+            descripcion = input("Descripcion: ")
+            campo_vacio_exception(descripcion)
+            equipamiento.append({"nombre": nombre, "tipo": tipo, "potencia": potencia, "descripcion": descripcion})
+            print(f"El arma '{nombre.capitalize()}' ha sido registrada exitosamente.")
+            campo_relleno = True
+        except KeyboardInterrupt:
+            print("\nRegistro de armas finalizado.")
+        except ValueError:
+            print("La potencia debe ser un número entero.")
+        except Exception as e:
+            print(e)
 
 
-anadir_equipamiento("Aragorn", "Andúril")
-anadir_equipamiento("Frodo", "Daga de Frodo")
+def campo_vacio_exception(entrada):
+    """
+    Verifica si la entrada está vacía y lanza una excepción si lo está.
+
+    Esta función comprueba si el valor que se le pasa está vacío (es decir, si es una cadena vacía).
+    Si es así, lanza una excepción con un mensaje que indica que el campo no puede estar vacío.
+    Si la entrada no está vacía, simplemente la devuelve.
+
+    :param entrada: La entrada que se va a comprobar. Puede ser cualquier cadena que el usuario
+                    proporcione.
+    :return: La misma entrada si no está vacía.
+    """
+    if entrada == "":
+        raise Exception("El campo no puede estar vacío. Por favor, inserte algo.")
+    return entrada
+
+
+
+
+anadir_equipamiento()
+ampliar_equipamiento()
+print(equipamiento)
 
