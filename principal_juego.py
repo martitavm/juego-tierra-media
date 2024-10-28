@@ -45,23 +45,53 @@ frases_combate = ["Menudo golpe.",
 
 probabilidad_golpe = {"espada": 0.6, "arco": 0.5, "hacha": 0.55, "daga": 0.4}
 
+def campo_vacio(campo):
+    """
+    Función para comprobar que los campos que se introducen por teclado no están vacíos.
+    :param campo: String introducido por teclado.
+    :return: Excepcion si está vacio, string si no.
+    """
+    if campo == "":
+        raise Exception("No puedes dejar vacío este campo")
+    return campo
+
 def check_character_equip(personaje):
+    """
+    Función que recibe un personaje del diccionario, comprueba su arma equipada
+    y devuelve el arma y su probabilidad de golpear.
+    :param personaje: String con nombre del personaje.
+    :return: Diccionario con datos del arma y la probabilidad de golpear.
+            En caso de no tener arma devuelve diccionario vacío y 100% de probabilidad.
+    """
     arma = personaje.get("arma_equipada")
     if not arma:
-        return {}, 100
+        return {}, 1
     tipo_arma = arma["tipo"].lower()
-    probabilidad = probabilidad_golpe.get(tipo_arma, 100)
+    probabilidad = probabilidad_golpe.get(tipo_arma, 1)
     return arma, probabilidad
 
-def battle(p1, p2):
+def battle():
+    """
+    Función que simula un combate entre dos personajes introducidos por teclado
+    La función comprueba la existencia de esos personajes en el diccionario, asigna
+    a los personajes una cantidad de vida, y su arma equipada con su probabilidad de golpear
+    y devuelve el ganador del combate tras simularlo.
+    :return: Ganador del combate.
+    """
     try:
+        p1 = input("Nombre del primer combatiente: ").capitalize()
+        campo_vacio(p1)
+        p2 = input("Nombre del segundo combatiente: ").capitalize()
+        campo_vacio(p2)
+        # Asigno el arma, probabilidad de golpear y la vida a los personajes
         arma_p1, prob_p1 = check_character_equip(personajes[p1])
-        vida_p1 = 100
+        vida_p1 = 300
         arma_p2, prob_p2 = check_character_equip(personajes[p2])
-        vida_p2 = 100
+        vida_p2 = 300
         if arma_p1 == {} or arma_p2 == {}:
             print(f"{p1 if arma_p1 == {} else p2} no tiene un arma equipada.")
             return
+        # Comienza el combate
         print(f"{p1} ha insultado a la madre de {p2}, se vienen los problemas.")
         while vida_p1 or vida_p2:
             if random.random() < prob_p1 and vida_p1 > 0:
@@ -80,11 +110,20 @@ def battle(p1, p2):
             if vida_p2 <= 0:
                 print(f"{p2} ha sido derrotado, {p1} GANA!")
                 return
+            # Si se cumple esta condición uno de los personajes muere
+            if random.random() < 0.05:
+                print(f"{p1 if random.random() < 0.5 else p2} ha sido golpeado por una abuela y ha fallecido.")
+                return
     except KeyError:
         print(f"{p1 if p1 not in personajes else p2} no está en estas tierras")
-        return
+    except Exception as e:
+        print(f"{e}")
 
 def show_characters():
+    """
+    Función que recorre un diccionario de personajes y muestra todos sus datos.
+    :return: Datos del diccionario recorrido.
+    """
     for keys, values in personajes.items():
         print(f"Personaje: {keys}")
         for value, datos in values.items():
@@ -92,9 +131,17 @@ def show_characters():
         print("---------------------------------------")
     return
 
-def show_character_equip(equipo):
+def show_character_equip():
+    """
+    Función que muestra los personajes que tienen en su equipamiento el
+    arma introducida por teclado.
+    :return: Lista con los personajes que tienen el arma en su equipamiento.
+    """
     lista_personaje_equipado = []
     try:
+        equipo = input("Introduce el arma a buscar: ")
+        campo_vacio(equipo)
+
         for keys, values in personajes.items():
             if equipo.lower() in values["equipamiento"][0]["nombre"].lower():
                 lista_personaje_equipado.append(keys)
@@ -105,9 +152,9 @@ def show_character_equip(equipo):
         return
     except AttributeError:
         print("Introduce el nombre del equipo")
+    except Exception as e:
+        print(f"{e}")
 
-
-
-(battle("Aragorn", "Legolas"))
+# battle()
 # show_characters()
-#show_character_equip("Arco de Galadriel")
+# show_character_equip()
