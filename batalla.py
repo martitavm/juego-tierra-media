@@ -27,6 +27,7 @@ personajes = {
     }
 }
 
+
 frases_combate = ["Menudo golpe.",
                   "Justo en la coronilla.",
                   "Eso tiene que doler.",
@@ -116,6 +117,8 @@ def battle():
                 return
     except KeyError:
         print(f"{p1 if p1 not in personajes else p2} no está en estas tierras")
+    except NameError:
+        print("El diccionaro con datos no existe")
     except Exception as e:
         print(f"{e}")
 
@@ -124,12 +127,15 @@ def show_characters():
     Función que recorre un diccionario de personajes y muestra todos sus datos.
     :return: Datos del diccionario recorrido.
     """
-    for keys, values in personajes.items():
-        print(f"Personaje: {keys}")
-        for value, datos in values.items():
-            print(f"-> {value.capitalize()}: {datos}")
-        print("---------------------------------------")
-    return
+    try:
+        for keys, values in personajes.items():
+            print(f"Personaje: {keys}")
+            for value, datos in values.items():
+                print(f"-> {value.capitalize()}: {datos}")
+            print("---------------------------------------")
+        return
+    except NameError:
+        print("El diccionario con datos no existe")
 
 def show_character_equip():
     """
@@ -152,9 +158,11 @@ def show_character_equip():
         return
     except AttributeError:
         print("Introduce el nombre del equipo")
+    except NameError:
+        print("El diccionario con datos no existe")
     except Exception as e:
         print(f"{e}")
 
 # battle()
-# show_characters()
+show_characters()
 # show_character_equip()
