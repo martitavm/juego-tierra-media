@@ -1,30 +1,6 @@
 
-personajes = {
-    "Aragorn": {
-        "raza": "Humano",
-        "faccion": "La Comunidad del Anillo",
-        "ubicacion": "Rivendel",
-        "equipamiento": [
-            {"nombre": "Andúril", "tipo": "Espada", "potencia": 80}
-        ],
-        "arma_equipada": {"nombre": "Andúril", "tipo": "Espada", "potencia": 80},
-        "relaciones": [
-            {"personaje": "Legolas", "tipo": "Amigo", "nivel_confianza": 10}
-        ]
-    },
-    "Legolas": {
-        "raza": "Elfo",
-        "faccion": "La Comunidad del Anillo",
-        "ubicacion": "Bosque Negro",
-        "equipamiento": [
-            {"nombre": "Arco de Galadriel", "tipo": "Arco", "potencia": 70}
-        ],
-        "arma_equipada": {"nombre": "Arco de Galadriel", "tipo": "Arco", "potencia": 70},
-        "relaciones": [
-            {"personaje": "Aragorn", "tipo": "Amigo", "nivel_confianza": 10}
-        ]
-    }
-}
+
+
 
 #Personaje relacionado: Nombre del otro personaje.
 #Tipo de relación: Amigo, Enemigo, Neutral.
@@ -32,7 +8,25 @@ personajes = {
 
 tipos = ["Amigo", "Enemigo", "Neutral"]
 
-def establecer_relaciones():
+def establecer_relaciones(personajes):
+    """
+      Función para establecer o actualizar relaciones entre personajes.
+
+      Solicita al usuario que ingrese el nombre de un personaje principal y otro personaje con el cual
+      establecerá una relación.
+
+      Entradas:
+      - personaje (str): Nombre del personaje que establece la relación.
+      - personaje_relacion (str): Nombre del personaje con el cual se establece la relación.
+      - tipo (str): Tipo de relación entre personajes. Debe ser uno de los valores en `tipos`.
+      - nivel_confianza (int): Nivel de confianza o enemistad en un rango de 1 a 10.
+
+      Reglas de Validación:
+      1. El nombre de los personajes deben ser cadenas de texto.
+      2. El tipo de relación debe estar en `tipos`: 'Amigo', 'Enemigo' o 'Neutral'.
+      3. El nivel de confianza debe ser un entero entre 1 y 10.
+
+      """
 
     personaje = input("Ingrese el personaje que va a establecer una relacion")
     personaje_relacion = input("Ingrese el nombre del personaje a relacionar")
@@ -81,6 +75,5 @@ def establecer_relaciones():
 
     else:
         print("Uno o ambos personajes no existen en el diccionario.")
-establecer_relaciones()
 
-print(personajes)
+
