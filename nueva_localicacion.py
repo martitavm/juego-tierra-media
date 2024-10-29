@@ -1,32 +1,24 @@
-personajes = {
-    "Aragorn": {
-        "raza": "Humano",
-        "faccion": "La Comunidad del Anillo",
-        "ubicacion": "Rivendel",
-        "equipamiento": [
-            {"nombre": "Andúril", "tipo": "Espada", "potencia": 80}
-        ],
-        "arma_equipada": {"nombre": "Andúril", "tipo": "Espada", "potencia": 80},
-        "relaciones": [
-            {"personaje": "Legolas", "tipo": "Amigo", "nivel_confianza": 10}
-        ]
-    },
-    "Legolas": {
-        "raza": "Elfo",
-        "faccion": "La Comunidad del Anillo",
-        "ubicacion": "Bosque Negro",
-        "equipamiento": [
-            {"nombre": "Arco de Galadriel", "tipo": "Arco", "potencia": 70}
-        ],
-        "arma_equipada": {"nombre": "Arco de Galadriel", "tipo": "Arco", "potencia": 70},
-        "relaciones": [
-            {"personaje": "Aragorn", "tipo": "Amigo", "nivel_confianza": 10}
-        ]
-    }
-}
 
-def nueva_localizacion():
 
+
+
+
+def nueva_localizacion(personajes):
+        """
+       Actualiza o añade la ubicación de un personaje en el diccionario `personajes`.
+
+       Solicita al usuario un personaje y permite:
+       1. Moverlo a una ubicación existente.
+       2. Añadir una nueva ubicación y mover al personaje allí.
+
+       Entradas:
+       - personaje (str): Nombre del personaje.
+       - opcion (str): '1' para mover, '2' para añadir nueva ubicación.
+
+       Actualiza:
+       - `personajes[personaje]["ubicacion"]` con la ubicación seleccionada.
+       - `localizaciones` si se añade una ubicación nueva.
+        """
 
         while True:
             personaje = input("Ingrese el nombre del personaje: ").lower()
@@ -68,6 +60,5 @@ def nueva_localizacion():
 
         else:
             print("Opción no válida. Por favor, elija 1 o 2.")
-nueva_localizacion()
 
-print(personajes)
+
