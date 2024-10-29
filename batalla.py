@@ -6,7 +6,8 @@ personajes = {
         "faccion": "La Comunidad del Anillo",
         "ubicacion": "Rivendel",
         "equipamiento": [
-            {"nombre": "Andúril", "tipo": "Espada", "potencia": 80}
+            {"nombre": "Andúril", "tipo": "Espada", "potencia": 80},
+            {"nombre": "Arco de Galadriel"}
         ],
         "arma_equipada": {"nombre": "Andúril", "tipo": "Espada", "potencia": 80},
         "relaciones": [
@@ -149,8 +150,10 @@ def show_character_equip():
         campo_vacio(equipo)
 
         for keys, values in personajes.items():
-            if equipo.lower() in values["equipamiento"][0]["nombre"].lower():
-                lista_personaje_equipado.append(keys)
+            for arma in values["equipamiento"]:
+                if equipo.lower() in arma["nombre"].lower():
+                    lista_personaje_equipado.append(keys)
+
         if len(lista_personaje_equipado) == 0:
             print(f"Ningún personaje tiene {equipo}")
         else:
@@ -164,5 +167,5 @@ def show_character_equip():
         print(f"{e}")
 
 # battle()
-show_characters()
+# show_characters()
 # show_character_equip()
