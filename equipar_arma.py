@@ -3,33 +3,6 @@
 # Permite que un personaje seleccione un arma de su inventario de equipamiento y la equipe.
 # Si el personaje ya tiene una arma equipada, se debe reemplazar con la nueva.
 
-personajes = {
-    "Aragorn": {
-        "raza": "Humano",
-        "faccion": "La Comunidad del Anillo",
-        "ubicacion": "Rivendel",
-        "equipamiento": [
-            {"nombre": "Andúril", "tipo": "Espada", "potencia": 80}
-        ],
-        "arma_equipada": {"nombre": "Andúril", "tipo": "Espada", "potencia": 80},
-        "relaciones": [
-            {"personaje": "Legolas", "tipo": "Amigo", "nivel_confianza": 10}
-        ]
-    },
-    "Legolas": {
-        "raza": "Elfo",
-        "faccion": "La Comunidad del Anillo",
-        "ubicacion": "Bosque Negro",
-        "equipamiento": [
-            {"nombre": "Arco de Galadriel", "tipo": "Arco", "potencia": 70}
-        ],
-        "arma_equipada": {"nombre": "Arco de Galadriel", "tipo": "Arco", "potencia": 70},
-        "relaciones": [
-            {"personaje": "Aragorn", "tipo": "Amigo", "nivel_confianza": 10}
-        ]
-    }
-}
-
 def buscar_arma_equipamiento(nombre_personaje, nombre_arma):
     """
     Busca un arma específica en el equipamiento de un personaje.

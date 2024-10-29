@@ -7,34 +7,6 @@
 # Potencia: (entero positivo) Un valor numérico que representa la potencia del objeto.
 # El equipamiento se añadirá a la lista de objetos del personaje.
 
-personajes = {
-    "Aragorn": {
-        "raza": "Humano",
-        "faccion": "La Comunidad del Anillo",
-        "ubicacion": "Rivendel",
-        "equipamiento": [
-            {"nombre": "Andúril", "tipo": "Espada", "potencia": 80}
-        ],
-        "arma_equipada": {"nombre": "Andúril", "tipo": "Espada", "potencia": 80},
-        "relaciones": [
-            {"personaje": "Legolas", "tipo": "Amigo", "nivel_confianza": 10}
-        ]
-    },
-    "Legolas": {
-        "raza": "Elfo",
-        "faccion": "La Comunidad del Anillo",
-        "ubicacion": "Bosque Negro",
-        "equipamiento": [
-            {"nombre": "Arco de Galadriel", "tipo": "Arco", "potencia": 70}
-        ],
-        "arma_equipada": {"nombre": "Arco de Galadriel", "tipo": "Arco", "potencia": 70},
-        "relaciones": [
-            {"personaje": "Aragorn", "tipo": "Amigo", "nivel_confianza": 10}
-        ]
-    }
-}
-
-
 equipamiento = [
 {"nombre": "Andúril", "tipo": "Espada", "potencia": 80, "descripcion": "La espada legendaria de Aragorn, forjada de los fragmentos de Narsil."},
     {"nombre": "Arco de Galadriel", "tipo": "Arco", "potencia": 70, "descripcion": "El arco de Legolas, dado como un regalo por la dama Galadriel."},
