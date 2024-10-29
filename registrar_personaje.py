@@ -8,7 +8,6 @@
 # Relaciones: (lista vacía al inicio). Almacena las relaciones del personaje con otros personajes (amigos, enemigos, etc.).
 # El personaje debe almacenarse en un diccionario dentro de un diccionario general llamado personajes.
 
-
 def verificar_si_input_vacio(input):
     """
        Verifica que el input no esté vacío.
@@ -21,7 +20,6 @@ def verificar_si_input_vacio(input):
         raise ValueError("Introduce el contenido correctamente.")
     return input
 
-
 def registrar_personaje(personajes):
     """
         Registra un nuevo personaje en el diccionario general de personajes.
@@ -33,6 +31,7 @@ def registrar_personaje(personajes):
         con los atributos del personaje.
         :return: No devuelve nada.
     """
+
     try:
         nombre = input("Introduce el nombre del personaje que desea registrar: ")
         verificar_si_input_vacio(nombre)
@@ -48,6 +47,7 @@ def registrar_personaje(personajes):
         # Agregamos el personaje al diccionario de personajes
         personajes.update({nombre: {"raza": raza, "faccion": faccion, "ubicacion": ubicacion,
                                     "equipamiento": equipamiento, "relaciones": relaciones}})
+
         print(f"El personaje {nombre} ha sido registrado exitosamente. ")
     except ValueError as e:
         print(f"Error: {e}")

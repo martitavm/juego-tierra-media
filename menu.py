@@ -29,6 +29,10 @@ personajes = {
 }
 
 
+"""
+   Muestra el menú principal de opciones para la gestión de personajes de la Tierra Media.
+   :return: No devuelve nada
+"""
 def menu():
     """
        Muestra el menú principal de opciones para la gestión de personajes de la Tierra Media.
@@ -47,7 +51,6 @@ def menu():
     print("9. Mostrar todos los personajes")
     print("10. Salir")
 
-
 def switch_menu(opcion_juego):
     """
     Ejecuta la acción correspondiente según la opción seleccionada en el menú.
@@ -59,6 +62,7 @@ def switch_menu(opcion_juego):
         case 1:
             print("Has seleccionado 1. Registrar un nuevo personaje")
             return registrar_personaje(personajes)
+
         case 2:
             print("Has seleccionado 2. Añadir equipamiento a un personaje")
             # return anadir_equipamiento()
@@ -77,6 +81,7 @@ def switch_menu(opcion_juego):
             # return simular_batalla()
         case 7:
             print("Has seleccionado 7. Listar personajes por facción")
+
             return listar_personaje_faccion(personajes)
         case 8:
             print("Has seleccionado 8. Buscar personajes por equipamiento")

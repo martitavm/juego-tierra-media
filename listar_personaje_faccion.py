@@ -1,6 +1,5 @@
 from registrar_personaje import verificar_si_input_vacio
 
-
 def listar_personaje_faccion(personajes):
     """
         Muestra todos los personajes que pertenecen a una facción específica.
@@ -12,15 +11,17 @@ def listar_personaje_faccion(personajes):
         con los atributos del personaje.
         :return: No devuelve nada
     """
-
     try:
         nombre_faccion = input("Ingrese el nombre de la faccion que desea listar: ")
         verificar_si_input_vacio(nombre_faccion)
+
         personajes_en_faccion = [
             personaje for personaje in personajes
             if personajes[personaje]["faccion"].lower() == nombre_faccion.lower()
         ]
+
         # Comprobamos si existe la facción escrita por el usuario, si existe muestra los personajes de esa facción y si no existe saltará un aviso
+
         if personajes_en_faccion:
             for personaje in personajes_en_faccion:
                 print(personaje)
