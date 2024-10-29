@@ -80,6 +80,7 @@ def battle():
     y devuelve el ganador del combate tras simularlo.
     :return: Ganador del combate.
     """
+    p1, p2 = "", ""
     try:
         p1 = input("Nombre del primer combatiente: ").capitalize()
         campo_vacio(p1)
