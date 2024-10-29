@@ -1,34 +1,5 @@
 import random
 
-personajes = {
-    "Aragorn": {
-        "raza": "Humano",
-        "faccion": "La Comunidad del Anillo",
-        "ubicacion": "Rivendel",
-        "equipamiento": [
-            {"nombre": "Andúril", "tipo": "Espada", "potencia": 80},
-            {"nombre": "Arco de Galadriel"}
-        ],
-        "arma_equipada": {"nombre": "Andúril", "tipo": "Espada", "potencia": 80},
-        "relaciones": [
-            {"personaje": "Legolas", "tipo": "Amigo", "nivel_confianza": 10}
-        ]
-    },
-    "Legolas": {
-        "raza": "Elfo",
-        "faccion": "La Comunidad del Anillo",
-        "ubicacion": "Bosque Negro",
-        "equipamiento": [
-            {"nombre": "Arco de Galadriel", "tipo": "Arco", "potencia": 70}
-        ],
-        "arma_equipada": {"nombre": "Arco de Galadriel", "tipo": "Arco", "potencia": 70},
-        "relaciones": [
-            {"personaje": "Aragorn", "tipo": "Amigo", "nivel_confianza": 10}
-        ]
-    }
-}
-
-
 frases_combate = ["Menudo golpe.",
                   "Justo en la coronilla.",
                   "Eso tiene que doler.",
@@ -44,7 +15,6 @@ frases_combate = ["Menudo golpe.",
                   "¿A quién se le ocurre apuntar al dedo meñique del pie?",
                   "¿En serio? ¿Otra vez en la cabeza?",
                   "¡Carambolas, dale caña ahí!"]
-
 probabilidad_golpe = {"espada": 0.6, "arco": 0.5, "hacha": 0.55, "daga": 0.4}
 
 def campo_vacio(campo):
@@ -57,7 +27,7 @@ def campo_vacio(campo):
         raise Exception("No puedes dejar vacío este campo")
     return campo
 
-def check_character_equip(personaje):
+def comprobar_personaje(personaje):
     """
     Función que recibe un personaje del diccionario, comprueba su arma equipada
     y devuelve el arma y su probabilidad de golpear.
@@ -72,7 +42,7 @@ def check_character_equip(personaje):
     probabilidad = probabilidad_golpe.get(tipo_arma, 1)
     return arma, probabilidad
 
-def battle():
+def simular_batalla(personajes):
     """
     Función que simula un combate entre dos personajes introducidos por teclado
     La función comprueba la existencia de esos personajes en el diccionario, asigna
@@ -87,9 +57,9 @@ def battle():
         p2 = input("Nombre del segundo combatiente: ").capitalize()
         campo_vacio(p2)
         # Asigno el arma, probabilidad de golpear y la vida a los personajes
-        arma_p1, prob_p1 = check_character_equip(personajes[p1])
+        arma_p1, prob_p1 = comprobar_personaje(personajes[p1])
         vida_p1 = 300
-        arma_p2, prob_p2 = check_character_equip(personajes[p2])
+        arma_p2, prob_p2 = comprobar_personaje(personajes[p2])
         vida_p2 = 300
         if arma_p1 == {} or arma_p2 == {}:
             print(f"{p1 if arma_p1 == {} else p2} no tiene un arma equipada.")
@@ -124,7 +94,7 @@ def battle():
     except Exception as e:
         print(f"{e}")
 
-def show_characters():
+def mostrar_personajes(personajes):
     """
     Función que recorre un diccionario de personajes y muestra todos sus datos.
     :return: Datos del diccionario recorrido.
@@ -139,7 +109,7 @@ def show_characters():
     except NameError:
         print("El diccionario con datos no existe")
 
-def show_character_equip():
+def buscar_personaje_equipamiento(personajes):
     """
     Función que muestra los personajes que tienen en su equipamiento el
     arma introducida por teclado.
@@ -166,7 +136,3 @@ def show_character_equip():
         print("El diccionario con datos no existe")
     except Exception as e:
         print(f"{e}")
-
-# battle()
-# show_characters()
-# show_character_equip()
