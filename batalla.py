@@ -147,12 +147,12 @@ def show_character_equip():
     """
     lista_personaje_equipado = []
     try:
-        equipo = input("Introduce el arma a buscar: ")
+        equipo = input("Introduce el arma a buscar: ").lower()
         campo_vacio(equipo)
 
         for keys, values in personajes.items():
             for arma in values["equipamiento"]:
-                if equipo.lower() in arma["nombre"].lower():
+                if equipo in arma["nombre"].lower():
                     lista_personaje_equipado.append(keys)
 
         if len(lista_personaje_equipado) == 0:
