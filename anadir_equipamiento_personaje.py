@@ -7,34 +7,6 @@
 # Potencia: (entero positivo) Un valor numérico que representa la potencia del objeto.
 # El equipamiento se añadirá a la lista de objetos del personaje.
 
-personajes = {
-    "Aragorn": {
-        "raza": "Humano",
-        "faccion": "La Comunidad del Anillo",
-        "ubicacion": "Rivendel",
-        "equipamiento": [
-            {"nombre": "Andúril", "tipo": "Espada", "potencia": 80}
-        ],
-        "arma_equipada": {"nombre": "Andúril", "tipo": "Espada", "potencia": 80},
-        "relaciones": [
-            {"personaje": "Legolas", "tipo": "Amigo", "nivel_confianza": 10}
-        ]
-    },
-    "Legolas": {
-        "raza": "Elfo",
-        "faccion": "La Comunidad del Anillo",
-        "ubicacion": "Bosque Negro",
-        "equipamiento": [
-            {"nombre": "Arco de Galadriel", "tipo": "Arco", "potencia": 70}
-        ],
-        "arma_equipada": {"nombre": "Arco de Galadriel", "tipo": "Arco", "potencia": 70},
-        "relaciones": [
-            {"personaje": "Aragorn", "tipo": "Amigo", "nivel_confianza": 10}
-        ]
-    }
-}
-
-
 equipamiento = [
 {"nombre": "Andúril", "tipo": "Espada", "potencia": 80, "descripcion": "La espada legendaria de Aragorn, forjada de los fragmentos de Narsil."},
     {"nombre": "Arco de Galadriel", "tipo": "Arco", "potencia": 70, "descripcion": "El arco de Legolas, dado como un regalo por la dama Galadriel."},
@@ -62,7 +34,7 @@ def buscar_arma(nombre_arma):
             return arma
     return  {}
 
-def anadir_equipamiento():
+def anadir_equipamiento(personajes):
     """
     Añade un arma al equipamiento de un personaje si este existe y si no la tiene ya.
 
@@ -75,33 +47,41 @@ def anadir_equipamiento():
     Nota: Asegúrate de que el personaje y el arma estén bien escritos, porque si no,
           no las podrás añadir. No queremos que un elfo se quede sin su arco favorito.
     """
+
+    # Se piden el nombre del personaje al que se le va a ampliar el equipamiento y el arma que se va a añadir.
     nombre_personaje = input("Introduce el nombre del personaje: ")
     nombre_arma = input("Introduce el nombre del arma: ")
 
     try:
+        # Comprueba que el personaje existe.
         if nombre_personaje not in personajes:
             print(f"El personaje {nombre_personaje} no existe.")
             return
+
+        # Si el personaje existe, lo almacenamos en la variable 'personaje'.
         personaje = personajes[nombre_personaje]
+        # Se busca el arma por el nombre que el usuario ha introducido.
         arma = buscar_arma(nombre_arma)
 
+        # Si no se encuentra el arma, se avisa al usuario.
         if not arma:
             print(f"El arma {nombre_arma.capitalize()} no existe.")
             return
 
+        # Se comprueba si el personaje ya tiene esta arma en su equipamiento.
         for armita in personaje["equipamiento"]:
             if armita["nombre"].lower() == arma["nombre"].lower():
                 print(f"El personaje {nombre_personaje} ya tiene el arma '{armita['nombre']}' en el equipamiento.")
                 return
 
-
+        # Se añade el arma al equipamiento del personaje.
         personaje["equipamiento"].append(arma)
         print(f"El arma '{arma['nombre']}' ha sido añadida al equipamiento del personaje {nombre_personaje}.")
 
     except KeyError:
         print(f"El personaje {nombre_personaje} no existe.")
 
-def ampliar_equipamiento():
+def ampliar_equipamiento(personajes):
     """
     Esta función es para los moderadores del juego.
 
@@ -155,9 +135,4 @@ def campo_vacio_exception(entrada):
     return entrada
 
 
-
-
-anadir_equipamiento()
-ampliar_equipamiento()
-print(equipamiento)
 

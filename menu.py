@@ -29,6 +29,34 @@ personajes = {
 }
 
 
+personajes = {
+    "Aragorn": {
+        "raza": "Humano",
+        "faccion": "La Comunidad del Anillo",
+        "ubicacion": "Rivendel",
+        "equipamiento": [
+            {"nombre": "Andúril", "tipo": "Espada", "potencia": 80}
+        ],
+        "arma_equipada": {"nombre": "Andúril", "tipo": "Espada", "potencia": 80},
+        "relaciones": [
+            {"personaje": "Legolas", "tipo": "Amigo", "nivel_confianza": 10}
+        ]
+    },
+    "Legolas": {
+        "raza": "Elfo",
+        "faccion": "La Comunidad del Anillo",
+        "ubicacion": "Bosque Negro",
+        "equipamiento": [
+            {"nombre": "Arco de Galadriel", "tipo": "Arco", "potencia": 70},
+            {"nombre": "Báculo de Saruman", "tipo": "Bastón", "potencia": 90}
+        ],
+        "arma_equipada": {"nombre": "Arco de Galadriel", "tipo": "Arco", "potencia": 70},
+        "relaciones": [
+            {"personaje": "Aragorn", "tipo": "Amigo", "nivel_confianza": 10}
+        ]
+    }
+}
+
 """
    Muestra el menú principal de opciones para la gestión de personajes de la Tierra Media.
    :return: No devuelve nada
@@ -93,7 +121,6 @@ def switch_menu(opcion_juego):
             print("Has seleccionado 10. Salir")
         case _:
             print("Opción no válida")
-
 
 opcion_juego = -1
 while opcion_juego != 10:
