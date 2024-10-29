@@ -1,5 +1,5 @@
 
-dicc = {
+personajes = {
     "Aragorn": {
         "raza": "Humano",
         "faccion": "La Comunidad del Anillo",
@@ -32,7 +32,12 @@ dicc = {
 
 tipos = ["Amigo", "Enemigo", "Neutral"]
 
-def establecer_relaciones(dicc,personaje,personaje_relacion, tipo, nivel_confianza):
+def establecer_relaciones():
+
+    personaje = input("Ingrese el personaje que va a establecer una relacion")
+    personaje_relacion = input("Ingrese el nombre del personaje a relacionar")
+    tipo = input("Ingrese el tipo de relaciones: ")
+    nivel_confianza = int(input("Indique el nivel de confianza: "))
 
     # Verificar tipos de entrada
     if type(personaje) != str:
@@ -48,13 +53,13 @@ def establecer_relaciones(dicc,personaje,personaje_relacion, tipo, nivel_confian
         print("Nivel de confianza incorrecto, tiene que ser un número entre 1 y 10")
         return
 
-    # Verificar que ambos personajes existen en el diccionario
-    if personaje in dicc and personaje_relacion in dicc:
+    # Verificar que ambos personajes existen
+    if personaje in personajes and personaje_relacion in personajes:
 
-        # Buscar la relación en la lista de relaciones
+
         relacion_actualizada = False
 
-        for relacion in dicc[personaje]["relaciones"]:
+        for relacion in personajes[personaje]["relaciones"]:
 
             if relacion["personaje"] == personaje_relacion:
                  # Si ya existe la relación, actualizamos
@@ -71,11 +76,11 @@ def establecer_relaciones(dicc,personaje,personaje_relacion, tipo, nivel_confian
                 "tipo": tipo,
                 "nivel_confianza": nivel_confianza
             }
-            dicc[personaje]["relaciones"].append(nueva_relacion)
+            personajes[personaje]["relaciones"].append(nueva_relacion)
             print(f"Relación nueva añadida entre {personaje} y {personaje_relacion}")
 
     else:
         print("Uno o ambos personajes no existen en el diccionario.")
-establecer_relaciones(dicc,"Legolas","Aragorn","Amigo", 10)
+establecer_relaciones()
 
-print(dicc)
+print(personajes)
