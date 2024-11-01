@@ -15,7 +15,8 @@ frases_combate = ["Menudo golpe.",
                   "¿A quién se le ocurre apuntar al dedo meñique del pie?",
                   "¿En serio? ¿Otra vez en la cabeza?",
                   "¡Carambolas, dale caña ahí!"]
-probabilidad_golpe = {"espada": 0.6, "arco": 0.5, "hacha": 0.55, "daga": 0.4}
+
+probabilidad_golpe = {"espada": 0.6, "arco": 0.5, "hacha": 0.55, "daga": 0.4, "objeto especial": 1}
 
 def campo_vacio(campo):
     """
@@ -23,7 +24,7 @@ def campo_vacio(campo):
     :param campo: String introducido por teclado.
     :return: Excepcion si está vacio, string si no.
     """
-    if campo == "":
+    if campo == "" or campo == " ":
         raise Exception("No puedes dejar vacío este campo")
     return campo
 
@@ -37,9 +38,12 @@ def comprobar_personaje(personaje):
     """
     arma = personaje.get("arma_equipada")
     if not arma:
-        return {}, 1
+        return {}, 0
     tipo_arma = arma["tipo"].lower()
-    probabilidad = probabilidad_golpe.get(tipo_arma, 1)
+    if tipo_arma in probabilidad_golpe:
+        probabilidad = probabilidad_golpe.get(tipo_arma, 1)
+    else:
+        probabilidad = 0.3
     return arma, probabilidad
 
 def simular_batalla(personajes):
@@ -65,15 +69,17 @@ def simular_batalla(personajes):
             print(f"{p1 if arma_p1 == {} else p2} no tiene un arma equipada.")
             return
         # Comienza el combate
-        print(f"{p1} ha insultado a la madre de {p2}, se vienen los problemas.")
+        print(f"\n-->{p1} ha insultado a la madre de {p2}, se vienen los problemas.")
+        print(f"¡¡¡QUE COMIENCE EL DUELO!!!")
+        print("----------------------------------------------")
         while vida_p1 or vida_p2:
             if random.random() < prob_p1 and vida_p1 > 0:
-                print(f"{p1} golpea con su {arma_p1["tipo"]} a {p2}.")
+                print(f"{p1} golpea con su {arma_p1['tipo']} a {p2}.")
                 print(f"{random.choice(frases_combate)}")
                 print("----------------------------------------------")
                 vida_p2 -= arma_p1["potencia"]
             if random.random() < prob_p2 and vida_p2 > 0:
-                print(f"{p2} golpea con su {arma_p2["tipo"]} a {p1}.")
+                print(f"{p2} golpea con su {arma_p2['tipo']} a {p1}.")
                 print(f"{random.choice(frases_combate)}")
                 print("----------------------------------------------")
                 vida_p1 -= arma_p2["potencia"]
@@ -84,7 +90,7 @@ def simular_batalla(personajes):
                 print(f"{p2} ha sido derrotado, {p1} GANA!")
                 return
             # Si se cumple esta condición uno de los personajes muere
-            if random.random() < 0.05:
+            if random.random() < 0.02:
                 print(f"{p1 if random.random() < 0.5 else p2} ha sido golpeado por una abuela y ha fallecido.")
                 return
     except KeyError:
