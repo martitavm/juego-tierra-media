@@ -39,30 +39,63 @@ def equipar_arma(personajes):
      equipada. Si añades una nueva, se reemplazará por la antigua.
      Si intentas equipar algo que ya lleva puesto, te lo recordaremos para evitar confusiones.
     """
-    # Se piden el nombre del personaje al que se le va a equipar un arma y el arma que se le va a equipar.
-    nombre_personaje = input("Introduce el nombre del personaje: ")
-    nombre_arma = input("Introduce el nombre del arma: ")
+
 
     try:
+        # Se piden el nombre del personaje al que se le va a equipar un arma y el arma que se le va a equipar.
+        nombre_personaje = input("Introduce el nombre del personaje: ").capitalize()
+        campo_vacio_exception(nombre_personaje)
+
+        if nombre_personaje not in personajes:
+            print(f"El personaje {nombre_personaje} no existe (comprueba que lo has escrito correctamente).")
+            return
+
         # Se almacena el nombre del personaje introducido en la variable 'personaje'.
         personaje = personajes[nombre_personaje]
+
+        print(f"Estas son las armas disponibles en el equipamiento de {nombre_personaje}:\n")
+        for weapon in personaje["equipamiento"]:
+            print(f"-> {weapon}")
+
+        nombre_arma = input("\nIntroduce el nombre del arma que quieres equipar: ")
+        campo_vacio_exception(nombre_arma)
+
+        # Comprobar si el personaje ya tiene un campo "arma_equipada" en su diccionario, si no, crear uno como lista vacía
+        if "arma_equipada" not in personaje:
+            personaje["arma_equipada"] = {}
+
         # Se busca el arma por el nombre que el usuario ha introducido.
         arma = buscar_arma_equipamiento(personaje, nombre_arma)
 
         # Si no se encuentra el arma, se avisa al usuario.
         if not arma:
-            print(f"El arma '{nombre_arma.capitalize()}' no se encuentra en el equipamiento del personaje {nombre_personaje}.")
+            print(f"\n ---> El arma '{nombre_arma.capitalize()}' no se encuentra en el equipamiento del personaje {nombre_personaje}. <---\n")
             return
 
         # Se comprueba si el personaje ya tiene esta arma en su equipada.
-        if personaje["arma_equipada"]["nombre"].lower() == nombre_arma.lower():
-            print(f"El personaje {nombre_personaje} ya tiene el arma '{arma['nombre']}' equipada.")
+        if personaje["arma_equipada"] and personaje["arma_equipada"]["nombre"].lower() == nombre_arma.lower():
+            print(f"\n ---> El personaje {nombre_personaje} ya tiene el arma '{arma['nombre']}' equipada. <---\n")
             return
 
         # Se le sustituye el arma antigüa por el arma que se ha introducido por teclado.
-        personaje["arma_equipada"].update(arma)
-        print(f"El arma '{arma['nombre']}' ha sido equipada al personaje {nombre_personaje}.")
+        personaje["arma_equipada"] = arma
+        print(f"\n ---> El arma '{arma['nombre']}' ha sido equipada al personaje {nombre_personaje}. <---\n")
 
-    except KeyError:
-        print (f"El personaje {nombre_personaje} no existe.")
+    except Exception as e:
+        print (f"{e}")
 
+def campo_vacio_exception(entrada):
+    """
+    Verifica si la entrada está vacía y lanza una excepción si lo está.
+
+    Esta función comprueba si el valor que se le pasa está vacío (es decir, si es una cadena vacía).
+    Si es así, lanza una excepción con un mensaje que indica que el campo no puede estar vacío.
+    Si la entrada no está vacía, simplemente la devuelve.
+
+    :param entrada: La entrada que se va a comprobar. Puede ser cualquier cadena que el usuario
+                    proporcione.
+    :return: La misma entrada si no está vacía.
+    """
+    if entrada == "" or entrada == " ":
+        raise Exception("El campo no puede estar vacío. Por favor, inserte algo.")
+    return entrada

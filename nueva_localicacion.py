@@ -1,8 +1,3 @@
-
-
-
-
-
 def nueva_localizacion(personajes):
         """
        Actualiza o añade la ubicación de un personaje en el diccionario `personajes`.
@@ -21,7 +16,7 @@ def nueva_localizacion(personajes):
         """
 
         while True:
-            personaje = input("Ingrese el nombre del personaje: ").lower()
+            personaje = input("Ingrese el nombre del personaje: ")
 
             # Verificar si el personaje existe
             if personaje in personajes:
@@ -30,7 +25,7 @@ def nueva_localizacion(personajes):
                 print("Este personaje no existe. Por favor, ingrese un nombre válido.")
 
 
-        opcion = input("¿Qué desea? 1. Mover ubicación o 2. Añadir una ubicación:\n")
+        opcion = input("¿Qué desea? 1. Mover ubicación o 2. Añadir una ubicación: ")
 
         # Lista de ubicaciones conocidas
         localizaciones = ["Rivendel", "Hobbiton", "Minas Tirith", "Mordor", "Isengard", "Bosque Negro", "Lothlórien"]
@@ -48,7 +43,7 @@ def nueva_localizacion(personajes):
 
         elif opcion == "2":
             # Añadir una nueva ubicación
-            ubicacion_nueva = input("Indique la nueva ubicación:\n")
+            ubicacion_nueva = input("Indique la nueva ubicación: ")
 
             if ubicacion_nueva not in localizaciones:
                 # Agrega la nueva ubicación a la lista de localizaciones
@@ -60,5 +55,3 @@ def nueva_localizacion(personajes):
 
         else:
             print("Opción no válida. Por favor, elija 1 o 2.")
-
-

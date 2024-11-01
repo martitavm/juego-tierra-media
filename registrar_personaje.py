@@ -7,18 +7,21 @@
 # Equipamiento: (lista vacía al inicio). Aquí se almacenarán los objetos que el personaje puede llevar (como armas o armaduras).
 # Relaciones: (lista vacía al inicio). Almacena las relaciones del personaje con otros personajes (amigos, enemigos, etc.).
 # El personaje debe almacenarse en un diccionario dentro de un diccionario general llamado personajes.
+from multiprocessing.connection import arbitrary_address
 
-def verificar_si_input_vacio(input):
+
+def verificar_si_input_vacio(entrada):
     """
        Verifica que el input no esté vacío.
 
-       :param input: str - Cadena de texto que representa el valor introducido por el usuario
+
+       :param entrada: str - Cadena de texto que representa el valor introducido por el usuario
        :return: str - Devuelve el valor de entrada si no está vacío
        :raises ValueError: Si el input está vacío, lanza un error con el mensaje "Introduce el contenido correctamente."
     """
-    if input == "":
+    if entrada == "" or entrada == " ":
         raise ValueError("Introduce el contenido correctamente.")
-    return input
+    return entrada
 
 def registrar_personaje(personajes):
     """
@@ -31,7 +34,6 @@ def registrar_personaje(personajes):
         con los atributos del personaje.
         :return: No devuelve nada.
     """
-
     try:
         nombre = input("Introduce el nombre del personaje que desea registrar: ")
         verificar_si_input_vacio(nombre)
@@ -42,15 +44,14 @@ def registrar_personaje(personajes):
         ubicacion = input("Introduce la ubicacion que desea registrar: ")
         verificar_si_input_vacio(ubicacion)
         equipamiento = []
+        arma_equipada = []
         relaciones = []
 
         # Agregamos el personaje al diccionario de personajes
         personajes.update({nombre: {"raza": raza, "faccion": faccion, "ubicacion": ubicacion,
-                                    "equipamiento": equipamiento, "relaciones": relaciones}})
+                                    "equipamiento": equipamiento,"arma_equipada": arma_equipada, "relaciones": relaciones}})
 
         print(f"El personaje {nombre} ha sido registrado exitosamente. ")
+        print(f"{personajes[nombre]}")
     except ValueError as e:
         print(f"Error: {e}")
-
-    finally:
-        print(personajes)

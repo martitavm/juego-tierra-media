@@ -8,15 +8,14 @@
 # El equipamiento se añadirá a la lista de objetos del personaje.
 
 equipamiento = [
-{"nombre": "Andúril", "tipo": "Espada", "potencia": 80, "descripcion": "La espada legendaria de Aragorn, forjada de los fragmentos de Narsil."},
-    {"nombre": "Arco de Galadriel", "tipo": "Arco", "potencia": 70, "descripcion": "El arco de Legolas, dado como un regalo por la dama Galadriel."},
-    {"nombre": "Hacha de Gimli", "tipo": "Hacha", "potencia": 75, "descripcion": "El arma favorita del enano Gimli, eficaz en combate cuerpo a cuerpo."},
-    {"nombre": "Daga de Frodo", "tipo": "Daga", "potencia": 40, "descripcion": "Daga élfica que Frodo lleva durante su viaje."},
-    {"nombre": "Báculo de Saruman", "tipo": "Bastón", "potencia": 90, "descripcion": "Un bastón de poder usado por el mago Saruman."},
-    {"nombre": "Anillo Único", "tipo": "Objeto especial", "potencia": 100, "descripcion": "El Anillo creado por Sauron para gobernar todos los demás."},
-    {"nombre": "Espada de Boromir", "tipo": "Espada", "potencia": 70, "descripcion": "El arma usada por Boromir, capitán de Gondor."}
+{"nombre": "Andúril", "tipo": "Espada", "potencia": 80},
+    {"nombre": "Arco de Galadriel", "tipo": "Arco", "potencia": 70},
+    {"nombre": "Hacha de Gimli", "tipo": "Hacha", "potencia": 75},
+    {"nombre": "Daga de Frodo", "tipo": "Daga", "potencia": 40},
+    {"nombre": "Báculo de Saruman", "tipo": "Bastón", "potencia": 90},
+    {"nombre": "Anillo Único", "tipo": "Objeto especial", "potencia": 100},
+    {"nombre": "Espada de Boromir", "tipo": "Espada", "potencia": 70}
 ]
-
 
 def buscar_arma(nombre_arma):
     """
@@ -48,15 +47,18 @@ def anadir_equipamiento(personajes):
           no las podrás añadir. No queremos que un elfo se quede sin su arco favorito.
     """
 
-    # Se piden el nombre del personaje al que se le va a ampliar el equipamiento y el arma que se va a añadir.
-    nombre_personaje = input("Introduce el nombre del personaje: ")
-    nombre_arma = input("Introduce el nombre del arma: ")
-
     try:
-        # Comprueba que el personaje existe.
-        if nombre_personaje not in personajes:
-            print(f"El personaje {nombre_personaje} no existe.")
+        # Se piden el nombre del personaje al que se le va a ampliar el equipamiento y el arma que se va a añadir.
+        nombre_personaje = input("Introduce el nombre del personaje: ")
+        campo_vacio_exception(nombre_personaje)
+        if nombre_personaje.capitalize() not in personajes:
+            print(f"\n ---> El personaje {nombre_personaje} no existe (comprueba que lo has escrito correctamente). <---\n")
             return
+
+        print("Estas son las armas disponibles para el personaje:\n")
+        for weapon in equipamiento:
+            print(f"-> {weapon}")
+        nombre_arma = input("\nIntroduce el nombre del arma que quieres añadir: ")
 
         # Si el personaje existe, lo almacenamos en la variable 'personaje'.
         personaje = personajes[nombre_personaje]
@@ -65,21 +67,39 @@ def anadir_equipamiento(personajes):
 
         # Si no se encuentra el arma, se avisa al usuario.
         if not arma:
-            print(f"El arma {nombre_arma.capitalize()} no existe.")
-            return
+            print(f"\n ---> El arma {nombre_arma.capitalize()} no existe. <---\n")
+            es_moderador = input("¿Eres moderador del juego?(SI/NO)")
+            if es_moderador.upper() == "SI":
+                respuesta= input("Eres moderador. ¿Deseas añadir este arma al equipamiento? (SI/NO): ")
+                if respuesta.upper() == "SI":
+                    print(f"¡Genial! Vamos a añadir ese arma al equipamiento.\n")
+                    arma_nueva = ampliar_equipamiento(personajes)
+                    if arma_nueva:
+                        personaje["equipamiento"].append(arma_nueva)
+                        print(f"\n ---> El arma '{arma_nueva['nombre']}' ha sido añadida al equipamiento del personaje {nombre_personaje}. <---\n")
+                        return
+                else:
+                    print("\n---> ¡Está bien! No se añadirá este arma al equipamiento. <---\n")
+            else:
+                peticion = input(f"¿Deseas que los moderadores del juego añadan este arma al equipamiento? (SI/NO): ")
+                if peticion.upper() == "SI":
+                    print("\n---> ¡Gracias por la sugerencia! Los moderadores lo añadirán tan pronto como puedan. <---\n")
+                if peticion.upper() == "NO":
+                    print("\n---> ¡Perfecto! Este arma no será añadida. <---\n")
+                return
 
         # Se comprueba si el personaje ya tiene esta arma en su equipamiento.
         for armita in personaje["equipamiento"]:
             if armita["nombre"].lower() == arma["nombre"].lower():
-                print(f"El personaje {nombre_personaje} ya tiene el arma '{armita['nombre']}' en el equipamiento.")
+                print(f"\n ---> El personaje {nombre_personaje} ya tiene el arma '{armita['nombre']}' en el equipamiento. <---\n")
                 return
 
         # Se añade el arma al equipamiento del personaje.
         personaje["equipamiento"].append(arma)
-        print(f"El arma '{arma['nombre']}' ha sido añadida al equipamiento del personaje {nombre_personaje}.")
+        print(f"\n ---> El arma '{arma['nombre']}' ha sido añadida al equipamiento del personaje {nombre_personaje}. <---\n")
 
-    except KeyError:
-        print(f"El personaje {nombre_personaje} no existe.")
+    except Exception as e:
+        print(f"{e}")
 
 def ampliar_equipamiento(personajes):
     """
@@ -105,11 +125,11 @@ def ampliar_equipamiento(personajes):
             tipo = input("Tipo de arma: ")
             campo_vacio_exception(tipo)
             potencia = int(input("Potencia: "))
-            descripcion = input("Descripcion: ")
-            campo_vacio_exception(descripcion)
-            equipamiento.append({"nombre": nombre, "tipo": tipo, "potencia": potencia, "descripcion": descripcion})
-            print(f"El arma '{nombre.capitalize()}' ha sido registrada exitosamente.")
+            arma_nueva = {"nombre": nombre, "tipo": tipo, "potencia": potencia}
+            equipamiento.append(arma_nueva)
+            print(f"\n---> El arma '{nombre.capitalize()}' ha sido registrada exitosamente. <---\n")
             campo_relleno = True
+            return arma_nueva
         except KeyboardInterrupt:
             print("\nRegistro de armas finalizado.")
         except ValueError:
@@ -130,9 +150,6 @@ def campo_vacio_exception(entrada):
                     proporcione.
     :return: La misma entrada si no está vacía.
     """
-    if entrada == "":
+    if entrada == "" or entrada == " ":
         raise Exception("El campo no puede estar vacío. Por favor, inserte algo.")
     return entrada
-
-
-
