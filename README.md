@@ -2,7 +2,7 @@
 > Bienvenidos al Juego de la Tierra Media, donde puedes manejar a personajes de la 
 Tierra Media y darles una vida llena de acción, drama y un equipamiento de lujo.
 > 
-> En este programa podremos crear personajes, añadirles equipamiento, ver batallas epicas 
+> En este programa podremos crear personajes, añadirles equipamiento, ver batallas épicas 
 **(cuidado con la abuela)** y establecer relaciones entre ellos entre otras opciones.  
 > 
 > Este trabajo ha sido realizado por los Nazgûls:  
@@ -160,4 +160,5 @@ Este flujo se ha realizado hasta asegurarnos de que el proyecto funciona correct
 | Buscar Personaje por Equipamiento |          |          |          | &#x2714;  |
 | Mostrar Personajes                |          |          |          | &#x2714;  |
 | Documentación                     | &#x2714; |          |          | &#x2714;  |
+
 ![](forodo.gif)
