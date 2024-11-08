@@ -1,3 +1,6 @@
+from personaje import Personaje
+
+
 class JuegoTierraMedia:
     def __init__(self, personajes_dict, facciones_dict):
         self._personajes = personajes_dict
@@ -19,37 +22,28 @@ class JuegoTierraMedia:
     def facciones(self, valor):
         self._facciones = valor
 
-    def registrar_personaje(personajes):
+    def registrar_personaje(self):
         """
             Registra un nuevo personaje en el diccionario general de personajes.
 
-            Este método permite ingresar la información de un nuevo personaje en el diccionario `personajes`, con los siguientes
+            Este método permite añadir la información de un nuevo personaje en el diccionario `personajes`, con los siguientes
             atributos: nombre, raza, facción, ubicación, equipamiento y relaciones. Los atributos `equipamiento` y `relaciones`
-            se inicializan como listas vacías.
-            :param personajes: dict - Diccionario de personajes, donde cada clave es un nombre de personaje y el valor es un diccionario
-            con los atributos del personaje.
+            se inicializan como listas vacías y  `arma_equipada` como un diccionario.
+            :param personajes: dict - Diccionario de objetos de clase personajes.
             :return: No devuelve nada.
         """
         try:
             nombre = input("Introduce el nombre del personaje que desea registrar: ")
-
             raza = input("Introduce la raza que desea registrar: ")
-
             faccion = input("Introduce la faccion que desea registrar: ")
-
             ubicacion = input("Introduce la ubicacion que desea registrar: ")
 
-            equipamiento = []
-            arma_equipada = []
-            relaciones = []
+            personaje = Personaje(nombre, raza, faccion, ubicacion)
 
-            # Agregamos el personaje al diccionario de personajes
-            personajes.update({nombre: {"raza": raza, "faccion": faccion, "ubicacion": ubicacion,
-                                        "equipamiento": equipamiento, "arma_equipada": arma_equipada,
-                                        "relaciones": relaciones}})
+            # Agregamos el personaje al diccionario, usando su nombre como clave
+            self._personajes[nombre] = personaje
 
-            print(f"El personaje {nombre} ha sido registrado exitosamente. ")
-            print(f"{personajes[nombre]}")
+            print(f"El personaje {personaje.nombre} ha sido registrado exitosamente. ")
         except ValueError as e:
             print(f"Error: {e}")
 
@@ -314,9 +308,9 @@ def nueva_localizacion(personajes):
     else:
         print("Opción no válida. Por favor, elija 1 o 2.")
 """
-"""   
+
     def listar_personaje_faccion(personajes):
-        
+        """
             Muestra todos los personajes que pertenecen a una facción específica.
     
             Solicita al usuario introducir el nombre de una facción y luego muestra una lista de personajes que
@@ -325,28 +319,26 @@ def nueva_localizacion(personajes):
             :param personajes: dict - Diccionario de personajes, donde cada clave es un nombre de personaje y el valor es un diccionario
             con los atributos del personaje.
             :return: No devuelve nada
-        
+        """
+
         try:
             nombre_faccion = input("Ingrese el nombre de la faccion que desea listar: ")
-            
-    
             personajes_en_faccion = [
-                personaje for personaje in personajes
-                if personajes[personaje]["faccion"].lower() == nombre_faccion.lower()
+                nombre for nombre, personaje in personajes.items()
+                if personaje.faccion.lower() == nombre_faccion.lower()
             ]
-    
+
             # Comprobamos si existe la facción escrita por el usuario, si existe muestra los personajes de esa facción y si no existe saltará un aviso
-    
             if personajes_en_faccion:
-                for personaje in personajes_en_faccion:
-                    print(personaje)
+                for nombre in personajes_en_faccion:
+                    print(nombre)
             else:
                 print("No hay personajes en esa facción o no existe.")
-    
+
         except Exception as e:
             print(f"Error: {e}")
             
-"""
+
 
 """
 def buscar_personaje_equipamiento(personajes):
@@ -398,3 +390,4 @@ def mostrar_personajes(personajes):
 
 def salir():
     print("Has finalizado el juego")
+    exit(0)
