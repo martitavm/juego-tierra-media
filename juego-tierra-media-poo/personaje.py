@@ -1,3 +1,7 @@
+
+
+# from equipamiento import Equipamiento
+
 class Personaje:
     def __init__(self, nombre, raza, faccion, ubicacion):
         self._nombre = nombre
@@ -40,6 +44,10 @@ class Personaje:
             self._faccion = valor
         else:
             raise ValueError("La facción debe ser una cadena de caracteres.")
+            
+
+def __str__(self):
+    return f"Nombre: {self._nombre}, Raza: {self._raza}, Facción: {self._faccion}, Ubicacion: {self._ubicacion}, Equipamiento: {self._equipamiento}, Relaciones: {self._relaciones}, Arma Equipada: {self._arma_equipada}"
 
     @property
     def ubicacion(self):
@@ -417,6 +425,11 @@ class UtilidadesPersonaje:
             if arma["nombre"].lower() == nombre_arma.lower():
                 return arma
         return None
+      
+       def obtener_potencia_arma(self,_arma_equipada):
 
-
+       if self._arma_equipada is not None:
+         return _arma_equipada.Equipamiento.potencia
+       else:
+           raise ValueError("No tiene arma equipada")
 
