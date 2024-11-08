@@ -6,7 +6,6 @@ class Relacion:
         self._tipo = tipo
         self._nivel_confianza = nivel_confianza
 
-
     @property
     def personaje(self):
          return self._personaje
