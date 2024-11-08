@@ -36,10 +36,10 @@ class Equipamiento:
         return nombre_arma
 
 class Arma(Equipamiento):
-    def __init__(self, nombre, tipo, potencia, alcance, durabilidad):
+    def __init__(self, nombre, tipo, potencia, alcance, probabilidad):
         super().__init__(nombre, tipo, potencia)
         self._alcance = alcance
-        self._durabilidad = durabilidad
+        self._probabilidad = probabilidad
 
     @property
     def alcance(self):
@@ -51,14 +51,14 @@ class Arma(Equipamiento):
 
     @property
     def durabilidad(self):
-        return self._durabilidad
+        return self._probabilidad
         
     @durabilidad.setter
     def durabilidad(self, value):
-            self._durabilidad = value
+            self._probabilidad = value
 
     def __str__(self):
-        return f"Nombre: {self._nombre}, Tipo: {self._tipo}, Potencia: {self._potencia}, Alcance: {self._alcance}, Durabilidad: {self._durabilidad}."
+        return f"Nombre: {self._nombre}, Tipo: {self._tipo}, Potencia: {self._potencia}, Alcance: {self._alcance}, Durabilidad: {self._probabilidad}."
 
 
 class Armadura(Equipamiento):
