@@ -1,3 +1,5 @@
+from juego_tierra_media import JuegoTierraMedia
+
 def menu():
     """
        Muestra el menú principal de opciones para la gestión de personajes de la Tierra Media.
