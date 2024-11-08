@@ -35,3 +35,54 @@ class Equipamiento:
     def es_arma(cls, nombre_arma):
         return nombre_arma
 
+class Arma(Equipamiento):
+    def __init__(self, nombre, tipo, potencia, alcance, durabilidad):
+        super().__init__(nombre, tipo, potencia)
+        self._alcance = alcance
+        self._durabilidad = durabilidad
+
+    @property
+    def alcance(self):
+        return self._alcance
+
+    @alcance.setter
+    def alcance(self, value):
+        self._alcance = value
+
+    @property
+    def durabilidad(self):
+        return self._durabilidad
+        
+    @durabilidad.setter
+    def durabilidad(self, value):
+            self._durabilidad = value
+
+    def __str__(self):
+        return f"Nombre: {self._nombre}, Tipo: {self._tipo}, Potencia: {self._potencia}, Alcance: {self._alcance}, Durabilidad: {self._durabilidad}."
+
+
+class Armadura(Equipamiento):
+    def __init__(self, nombre, tipo, potencia, defensa, peso):
+        super().__init__(nombre, tipo, potencia)
+        self._defensa = defensa
+        self._peso = peso
+
+    @property
+    def defensa(self):
+        return self._defensa
+
+    @defensa.setter
+    def defensa(self, value):
+        self._defensa = value
+            
+    @property
+    def peso(self):
+        return self._peso
+        
+    @peso.setter
+    def peso(self, value):
+        self._peso = value
+
+    def __str__(self):
+        return f"Nombre: {self._nombre}, Tipo: {self._tipo}, Potencia: {self._potencia}, Defensa: {self._defensa}, Peso: {self._peso}."
+
