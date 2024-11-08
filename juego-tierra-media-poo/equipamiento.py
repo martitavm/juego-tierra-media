@@ -85,4 +85,3 @@ class Armadura(Equipamiento):
 
     def __str__(self):
         return f"Nombre: {self._nombre}, Tipo: {self._tipo}, Potencia: {self._potencia}, Defensa: {self._defensa}, Peso: {self._peso}."
-
