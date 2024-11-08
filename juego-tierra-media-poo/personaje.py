@@ -41,6 +41,6 @@ class Personaje:
         else:
             raise ValueError("La facción debe ser una cadena de caracteres.")
 
-        
+
 def __str__(self):
     return f"Nombre: {self._nombre}, Raza: {self._raza}, Facción: {self._faccion}, Ubicacion: {self._ubicacion}, Equipamiento: {self._equipamiento}, Relaciones: {self._relaciones}, Arma Equipada: {self._arma_equipada}"
