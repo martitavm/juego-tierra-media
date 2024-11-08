@@ -7,7 +7,7 @@
 # Equipamiento: (lista vacía al inicio). Aquí se almacenarán los objetos que el personaje puede llevar (como armas o armaduras).
 # Relaciones: (lista vacía al inicio). Almacena las relaciones del personaje con otros personajes (amigos, enemigos, etc.).
 # El personaje debe almacenarse en un diccionario dentro de un diccionario general llamado personajes.
-from multiprocessing.connection import arbitrary_address
+# from multiprocessing.connection import arbitrary_address
 
 
 def verificar_si_input_vacio(entrada):
@@ -19,9 +19,10 @@ def verificar_si_input_vacio(entrada):
        :return: str - Devuelve el valor de entrada si no está vacío
        :raises ValueError: Si el input está vacío, lanza un error con el mensaje "Introduce el contenido correctamente."
     """
-    if entrada == "" or entrada == " ":
+    for entrada in entrada:
+     if entrada == "" or entrada == " ":
         raise ValueError("Introduce el contenido correctamente.")
-    return entrada
+     return entrada
 
 def registrar_personaje(personajes):
     """
@@ -35,14 +36,16 @@ def registrar_personaje(personajes):
         :return: No devuelve nada.
     """
     try:
+
         nombre = input("Introduce el nombre del personaje que desea registrar: ")
-        verificar_si_input_vacio(nombre)
         raza = input("Introduce la raza que desea registrar: ")
-        verificar_si_input_vacio(raza)
         faccion = input("Introduce la faccion que desea registrar: ")
-        verificar_si_input_vacio(faccion)
         ubicacion = input("Introduce la ubicacion que desea registrar: ")
-        verificar_si_input_vacio(ubicacion)
+
+        entradas = [nombre, raza, faccion, ubicacion]
+
+        verificar_si_input_vacio(entradas)
+
         equipamiento = []
         arma_equipada = []
         relaciones = []
