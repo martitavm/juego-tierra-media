@@ -1,9 +1,4 @@
-from anadir_equipamiento_personaje import equipamiento
-from menu import personajes
-
-
-# from equipamiento import Equipamiento
-
+from equipamiento import Arma
 class Personaje:
     def __init__(self, nombre, raza, faccion, ubicacion):
         self._nombre = nombre
@@ -46,10 +41,6 @@ class Personaje:
             self._faccion = valor
         else:
             raise ValueError("La facción debe ser una cadena de caracteres.")
-            
-
-def __str__(self):
-    return f"Nombre: {self._nombre}, Raza: {self._raza}, Facción: {self._faccion}, Ubicacion: {self._ubicacion}, Equipamiento: {self._equipamiento}, Relaciones: {self._relaciones}, Arma Equipada: {self._arma_equipada}"
 
     @property
     def ubicacion(self):
@@ -88,46 +79,59 @@ def __str__(self):
         self._arma_equipada = value
 
     def __str__(self):
-        return f"Nombre: {self._nombre}, Raza: {self._raza}, Facción: {self._faccion}, Ubicacion: {self._ubicacion}, Equipamiento: {self._equipamiento}, Relaciones: {self._relaciones}, Arma Equipada: {self._arma_equipada}"
+        # Creamos una variable para pasar a string los objetos que contiene la lista equipamiento. Se recorre la lista y se hace casting a string a cada arma.
+        equipamiento_str = ""
+        for weapon in self._equipamiento:
+            equipamiento_str += f"[{str(weapon)}]"
+
+        return f"Nombre: {self._nombre}, Raza: {self._raza}, Facción: {self._faccion}, Ubicacion: {self._ubicacion}, Equipamiento: {equipamiento_str}, Relaciones: {self._relaciones}, Arma Equipada: [{self._arma_equipada}]"
 
     # Metodo añadir equipamiento
 
-    def anadir_equipamiento(equipamiento):
+    def anadir_equipamiento(self, nombre_arma):
         """
-        Añade un arma al equipamiento de un personaje si este existe y si no la tiene ya.
+        Añade un arma al equipamiento de un personaje.
 
-        Esta función pregunta al usuario por el nombre del personaje y el nombre del arma que se
-        quiere añadir. Si el personaje no está en la lista, informa al usuario. Si el arma no existe,
-        también lo dice. Además, verifica que el personaje no tenga ya el arma en su equipamiento.
+        Este metodo busca el arma indicada en una lista predeterminada y, si existe y el personaje aún no la tiene, la añade al
+        equipamiento del personaje. Si el arma no existe, pregunta al usuario si desea que un
+        moderador la añada o si quiere sugerirla.
 
-        :return: No devuelve nada, pero imprime mensajes con información según la situación.
+        Al ejecutar este metodo:
+          1. Busca el arma por el nombre.
+          2. Si el arma no está, pregunta si el usuario es moderador o si desea sugerir el arma.
+          3. Verifica si el personaje ya tiene esa arma. Si ya está, no la añade de nuevo.
+          4. Si está bien, añade el arma al equipamiento.
 
-        Nota: Asegúrate de que el personaje y el arma estén bien escritos, porque si no,
-              no las podrás añadir. No queremos que un elfo se quede sin su arco favorito.
+        :param nombre_arma: El nombre del arma que se quiere añadir al personaje.
+        :return: No devuelve nada, pero muestra mensajes con información sobre el proceso.
         """
 
         try:
 
-            # Se busca el arma por el nombre que el usuario ha introducido.
-            arma = UtilidadesPersonaje.buscar_arma(equipamiento)
+            # Se busca el arma por el nombre que se ha pasado como parametro.
+            arma = UtilidadesPersonaje.buscar_arma(nombre_arma)
 
             # Si no se encuentra el arma, se avisa al usuario.
             if not arma:
-                print(f"\n ---> El arma {equipamiento.capitalize()} no existe. <---\n")
+                print(f"\n ---> El arma {nombre_arma.nombre} no existe. <---\n")
                 es_moderador = input("¿Eres moderador del juego?(SI/NO)")
+
+                # Si es moderador, le damos la opción de añadir el arma al juego
                 if es_moderador.upper() == "SI":
                     respuesta = input("Eres moderador. ¿Deseas añadir este arma al equipamiento? (SI/NO): ")
                     if respuesta.upper() == "SI":
                         print(f"¡Genial! Vamos a añadir ese arma al equipamiento.\n")
-                        arma_nueva = UtilidadesPersonaje.ampliar_equipamiento(personajes)
+                        arma_nueva = UtilidadesPersonaje.ampliar_equipamiento()
                         if arma_nueva:
-                            equipamiento.append(arma_nueva)
+                            # Añadimos el arma recién creada al equipamiento del personaje
+                            self._equipamiento.append(arma_nueva)
                             print(
-                                f"\n ---> El arma '{arma_nueva['nombre']}' ha sido añadida al equipamiento del personaje {self._nombre}. <---\n")
+                                f"\n ---> El arma '{arma_nueva.nombre}' ha sido añadida al equipamiento del personaje {self._nombre}. <---\n")
                             return
                     else:
                         print("\n---> ¡Está bien! No se añadirá este arma al equipamiento. <---\n")
                 else:
+                    # Si no es moderador, le damos la opción de sugerir que se añada el arma
                     peticion = input(
                         f"¿Deseas que los moderadores del juego añadan este arma al equipamiento? (SI/NO): ")
                     if peticion.upper() == "SI":
@@ -138,14 +142,14 @@ def __str__(self):
                     return
 
             # Se comprueba si el personaje ya tiene esta arma en su equipamiento.
-            for armita in equipamiento:
+            for armita in self._equipamiento:
                 if armita.nombre.lower() == arma.nombre.lower():
                     print(
                         f"\n ---> El personaje {self._nombre} ya tiene el arma '{armita.nombre}' en el equipamiento. <---\n")
                     return
 
             # Se añade el arma al equipamiento del personaje.
-            equipamiento.append(arma)
+            self._equipamiento.append(arma)
             print(
                 f"\n ---> El arma '{arma.nombre}' ha sido añadida al equipamiento del personaje {self._nombre}. <---\n")
 
@@ -154,45 +158,43 @@ def __str__(self):
 
 
     # Metodo equipar arma:
-    def equipar_arma(arma):
+    def equipar_arma(self, nombre_arma):
         """
-        Equipa un arma a un personaje si este la tiene en su inventario.
+        Intenta equipar un arma a un personaje si este ya la tiene en su equipamiento.
 
-        Esta función solicita al usuario que introduzca el nombre de un personaje y el nombre de un
-        arma. Luego, verifica si el personaje existe y si el arma está en su equipamiento. Si el
-        arma ya está equipada, informa al usuario. Si está correcto, equipa el arma al
-        personaje y lo confirma con un mensaje.
+        Este metodo busca el arma en el inventario del personaje usando el nombre que recibe como
+        parámetro. Si el arma está en su equipamiento y no está ya equipada, la equipa. Si el personaje ya
+        lleva esa arma o no la tiene, se muestra un mensaje informativo.
 
-        :return: No devuelve nada, pero imprime mensajes que indican el estado del proceso de
-                 equipar el arma.
+        Pasos:
+          1. Busca el arma en el equipamiento del personaje.
+          2. Si no la tiene, muestra un mensaje informativo.
+          3. Si ya la tiene equipada, avisa que ya está equipada.
+          4. Si es nueva, equipa el arma y reemplaza la anterior si existía.
 
-        Nota: ¡Asegúrate de que tu personaje no esté ya armado hasta los dientes! Solo puedes tener un arma
-         equipada. Si añades una nueva, se reemplazará por la antigua.
-         Si intentas equipar algo que ya lleva puesto, te lo recordaremos para evitar confusiones.
+        :param nombre_arma: Nombre del arma que queremos equipar.
+        :return: Nada; solo muestra mensajes que confirman cada paso.
         """
 
         try:
-            # Se busca el arma por el nombre que el usuario ha introducido.
-            arma = UtilidadesPersonaje.buscar_arma_equipamiento(arma)
+            # Se busca el arma por el nombre que se ha pasado como parametro.
+            arma = UtilidadesPersonaje.buscar_arma_equipamiento(nombre_arma)
 
             # Si no se encuentra el arma, se avisa al usuario.
             if not arma:
                 print(
-                    f"\n ---> El arma '{arma.nombre.capitalize()}' no se encuentra en el equipamiento del personaje {self._nombre}. <---\n")
+                    f"\n ---> El arma '{nombre_arma.nombre}' no se encuentra en el equipamiento del personaje {self._nombre}. <---\n")
                 return
 
             # Se comprueba si el personaje ya tiene esta arma en su equipada.
-            # if personaje["arma_equipada"] and personaje["arma_equipada"]["nombre"].lower() == arma.lower():
-            #     print(f"\n ---> El personaje {self._nombre} ya tiene el arma '{arma.nombre}' equipada. <---\n")
-            #     return
-            if arma in arma_equipada(arma):
+            if self._arma_equipada and self._arma_equipada.nombre == arma.nombre:
                 print(f"\n ---> El personaje {self._nombre} ya tiene el arma '{arma.nombre}' equipada. <---\n")
                 return
 
 
             # Se le sustituye el arma antigüa por el arma que se ha introducido por teclado.
-            personaje["arma_equipada"] = arma
-            print(f"\n ---> El arma '{arma['nombre']}' ha sido equipada al personaje {self._nombre}. <---\n")
+            self._arma_equipada = arma
+            print(f"\n ---> El arma '{arma.nombre}' ha sido equipada al personaje {self._nombre}. <---\n")
 
         except Exception as e:
             print(f"{e}")
@@ -333,49 +335,43 @@ class UtilidadesPersonaje:
 
     # Lista de equipamiento que pueden añadir los personajes
     equipamiento = [
-        equipamiento.Arma("Andúril", "Espada", 80, 50, 0.3),
-        equipamiento.Arma("Arco de Galadriel", "Arco", 70, 10, 0.2),
-        equipamiento.Arma("Hacha de Gimli", "Hacha", 75, 45, 0.2),
-        equipamiento.Arma("Daga de Frodo", "Daga", 40, 20, 0.1),
-        equipamiento.Arma("Báculo de Saruman", "Bastón", 90, 90, 0.5),
-        equipamiento.Arma("Anillo Único", "Objeto especial", 100, 100, 1),
-        equipamiento.Arma("Espada de Boromir", "Espada", 70, 40, 0.6)
+        Arma("Andúril", "Espada", 80, 50, 0.3),
+        Arma("Arco de Galadriel", "Arco", 70, 10, 0.2),
+        Arma("Hacha de Gimli", "Hacha", 75, 45, 0.2),
+        Arma("Daga de Frodo", "Daga", 40, 20, 0.1),
+        Arma("Báculo de Saruman", "Bastón", 90, 90, 0.5),
+        Arma("Anillo Único", "Objeto especial", 100, 100, 1),
+        Arma("Espada de Boromir", "Espada", 70, 40, 0.6)
     ]
 
     # Metodos adicionales para que funcione añadir equipamiento
     @staticmethod
-    def buscar_arma(arma):
+    def buscar_arma(nombre_arma):
         """
-        Busca un arma en la lista de equipamiento usando su nombre.
+         Busca un arma en la lista de equipamiento usando su nombre exacto.
 
-        :param nombre_arma: El nombre del arma que queremos encontrar. Se ignoran las mayúsculas, así que
-                            "Espada" y "espada" se consideran iguales.
-        :return: Devuelve un diccionario con la información del arma si se encuentra. Si no se encuentra,
-                    retorna un diccionario vacío.
+        :param nombre_arma: Nombre del arma que queremos encontrar (ignora mayúsculas y minúsculas).
+        :return: Devuelve el arma si la encuentra. Si no, devuelve un diccionario vacío.
 
-        Nota: Si estás buscando un arma, asegúrate de escribir bien el nombre.
+        Nota: Asegúrate de escribir bien el nombre del arma.
         """
-        for armita in equipamiento:
-            if armita.nombre.lower() == arma.nombre.lower():
+        for armita in UtilidadesPersonaje.equipamiento:
+            if armita.nombre == nombre_arma.nombre:
                 return armita
         return {}
 
     @staticmethod
     def ampliar_equipamiento():
         """
-        Esta función es para los moderadores del juego.
+        Permite a los moderadores añadir un nuevo arma al equipamiento.
 
-        Registra un nuevo arma en el equipamiento pidiendo al usuario detalles sobre ella.
+        Le pide al usuario información como el nombre, tipo, potencia, alcance y probabilidad del arma.
+        Se asegura de que estos datos sean válidos (la potencia debe ser un número entero, por ejemplo).
+        Si está bien, la añade al equipamiento y confirma con un mensaje.
 
-        Esta función solicita al usuario el nombre, tipo, potencia y descripción del arma que se
-        quiere añadir. Asegura que ninguna de estas entradas esté vacía y que la potencia sea un
-        número entero. Si está correcto, añade el arma al equipamiento y lo confirma con un
-        mensaje.
+        :return: Devuelve el arma creada si se añadió correctamente; si no, nada.
 
-        :return: No devuelve nada, pero imprime mensajes que indican el estado del registro del arma.
-
-        Nota: Recuerda que la potencia tiene que ser un número entero. Y no olvides que un arma sin nombre
-                es como un guerrero sin espada: ¡no tiene sentido!
+        Nota: La potencia tiene que ser un número entero. Y sin un nombre, el arma no sirve de nada.
         """
         campo_relleno = False
         while not campo_relleno:
@@ -385,7 +381,9 @@ class UtilidadesPersonaje:
                 potencia = int(input("Potencia: "))
                 alcance = int(input("Alcance: "))
                 probabilidad = float(input("Probabilidad: "))
-                arma_nueva = equipamiento.Arma(nombre, tipo, potencia, alcance, probabilidad)
+
+                # Creamos el arma nueva y confirmamos al usuario
+                arma_nueva = Arma(nombre, tipo, potencia, alcance, probabilidad)
                 print(f"\n---> El arma '{nombre.capitalize()}' ha sido registrada exitosamente. <---\n")
                 campo_relleno = True
                 return arma_nueva
@@ -398,24 +396,16 @@ class UtilidadesPersonaje:
 
     # Metodo adicional para que funcione el metodo equipar arma
     @staticmethod
-    def buscar_arma_equipamiento(arma):
+    def buscar_arma_equipamiento(nombre_arma):
         """
         Busca un arma específica en el equipamiento de un personaje.
 
-        Esta función toma el nombre de un personaje y el nombre de un arma, y busca en la lista de
-        equipamiento del personaje para ver si tiene el arma que se le indica. La búsqueda no distingue
-        entre mayúsculas y minúsculas, así que no te preocupes por eso.
+        :param nombre_arma: Nombre del arma que queremos encontrar.
+        :return: Devuelve el arma si está en el equipamiento del personaje; si no, None.
 
-        :param arma: PONER DESCRIPCION
-        :param nombre_arma: El nombre del arma que queremos encontrar dentro del equipamiento del personaje.
-        :return: Devuelve el diccionario del arma si se encuentra; si no, devuelve None.
-
-        Nota: Si buscas un arma en el equipamiento, asegúrate de que el personaje realmente tenga algo
-                en su inventario.
+        Nota: Asegúrate de que el personaje tiene armas en su equipamiento.
         """
-        for armita in equipamiento:
-            if armita.nombre.lower() == arma.nombre.lower():
+        for armita in UtilidadesPersonaje.equipamiento:
+            if armita.nombre == nombre_arma.nombre:
                 return armita
         return None
-
-
