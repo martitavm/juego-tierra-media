@@ -356,7 +356,7 @@ class UtilidadesPersonaje:
         Nota: Asegúrate de escribir bien el nombre del arma.
         """
         for armita in UtilidadesPersonaje.equipamiento:
-            if armita.nombre == nombre_arma.nombre:
+            if armita.nombre.lower() == nombre_arma.lower():
                 return armita
         return {}
 
@@ -409,3 +409,24 @@ class UtilidadesPersonaje:
             if armita.nombre == nombre_arma.nombre:
                 return armita
         return None
+
+    @staticmethod
+    def elegir_arma_a_equipar(personaje):
+        equipamiento_str = ""
+        indice = 1
+        for arma in personaje.equipamiento:
+            equipamiento_str += f"-> {indice}: [{str(arma)}]"
+            indice += 1
+        print(f"{equipamiento_str}")
+        eleccion = int(input("Elige el arma a equipar (introduce el número del arma): "))
+        arma = personaje.equipamiento[eleccion - 1]
+        return arma
+
+    @staticmethod
+    def mostrar_equipamiento():
+        equipamiento_str = ""
+        for arma in UtilidadesPersonaje.equipamiento:
+            equipamiento_str += f"->[{str(arma)}]\n"
+        print(f"{equipamiento_str}")
+        return equipamiento_str
+

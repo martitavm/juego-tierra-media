@@ -12,12 +12,12 @@ class Batalla:
         while vida_p1 or vida_p2:
             if random.random() < prob_p1 and vida_p1 > 0:
                 print(f"{p1.nombre} golpea con su {arma_p1} a {p2.nombre}.")
-                # print(f"{random.choice(frases_combate)}")
+                print(f"{comentarista()}")
                 print("----------------------------------------------")
                 vida_p2 -= potencia_p1
             if random.random() < prob_p2 and vida_p2 > 0:
                 print(f"{p2.nombre} golpea con su {arma_p2} a {p1.nombre}.")
-                # print(f"{random.choice(frases_combate)}")
+                print(f"{comentarista()}")
                 print("----------------------------------------------")
                 vida_p1 -= potencia_p2
             if vida_p1 <= 0:
@@ -51,3 +51,26 @@ def preparacion(pnj):
         potencia = pnj.arma_equipada.potencia
     vida = 300
     return arma, probabilidad, potencia, vida
+
+def comentarista():
+    """
+    Función que elige una frase aleatoria de un array de frases
+    para simular un comentarista en el combate.
+    :return:
+    """
+    frases_combate = ["Menudo golpe.",
+                      "Justo en la coronilla.",
+                      "Eso tiene que doler.",
+                      "¿No estaba prohibido dar en los ojos?",
+                      "Cuidado con el.... terraplén.",
+                      "Corre insensato",
+                      "¡Por la barba de Gandalf, eso duele!",
+                      "Esto va a doler más que caminar descalzo hasta Mordor.",
+                      "¡Por el hacha de Gimli, esto se pone intenso!",
+                      "¡Por los rizos de Sam, esto se complica!",
+                      "¡Por los pies peludos de Bilbo, vaya sacudida!",
+                      "¡Por la calvicie de Gollum, eso fue brillante!",
+                      "¿A quién se le ocurre apuntar al dedo meñique del pie?",
+                      "¿En serio? ¿Otra vez en la cabeza?",
+                      "¡Carambolas, dale caña ahí!"]
+    return random.choice(frases_combate)

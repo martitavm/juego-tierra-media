@@ -38,6 +38,8 @@ class JuegoTierraMedia:
             faccion = input("Introduce la faccion que desea registrar: ")
             ubicacion = input("Introduce la ubicacion que desea registrar: ")
 
+            personaje = Personaje(nombre, raza, faccion, ubicacion)
+
             # Agregamos el personaje al diccionario, usando su nombre como clave
             self._personajes[nombre] = personaje
 
@@ -73,7 +75,20 @@ class JuegoTierraMedia:
 
         except Exception as e:
             print(f"{e}")
-            
+
+    def buscar_personaje_equipamiento(self, nombre_equipo):
+        """
+        Función que muestra los personajes que tienen en su equipamiento el
+        arma pasada como parámetro
+        :param str nombre_equipo: Nombre del equipo a buscar
+        :return: Lista con los personajes que tienen el arma en su equipamiento.
+        """
+        lista_personaje_equipado = []
+        for pnj in self.personajes:
+            for equipo in self.personajes[pnj].equipamiento:
+                if nombre_equipo == equipo.nombre:
+                    lista_personaje_equipado.append(pnj)
+
         if len(lista_personaje_equipado) == 0:
             print(f"Ningún personaje tiene {nombre_equipo}")
         else:
@@ -91,40 +106,40 @@ class JuegoTierraMedia:
             print("----------------------------------")
         return
 
-    @staticmethod
-    def salir():
-        print("Has finalizado el juego")
-        exit(0)
-
 
     def listar_personaje_faccion(self):
         """
-        Muestra todos los personajes que pertenecen a una facción específica.
+            Muestra todos los personajes que pertenecen a una facción específica.
 
-        Solicita al usuario introducir el nombre de una facción y luego muestra una lista de personajes que
-        pertenecen a esa facción. Si la facción introducida no contiene personajes o no existe, muestra un
-        mensaje indicándolo.
-        :return: No devuelve nada
+            Solicita al usuario introducir el nombre de una facción y luego muestra una lista de personajes que
+            pertenecen a esa facción. Si la facción introducida no contiene personajes o no existe, muestra un
+            mensaje indicándolo.
+            :param personajes: dict - Diccionario de personajes, donde cada clave es un nombre de personaje y el valor es un diccionario
+            con los atributos del personaje.
+            :return: No devuelve nada
         """
+
         try:
-            nombre_faccion = input("Ingrese el nombre de la facción que desea listar: ").strip()
-            verificar_si_input_vacio(nombre_faccion)
+            nombre_faccion = input("Ingrese el nombre de la faccion que desea listar: ")
             personajes_en_faccion = [
-                nombre for nombre in self._personajes
-                if self._personajes[nombre].faccion and self._personajes[nombre].faccion.lower() == nombre_faccion
+                nombre for nombre, personaje in self._personajes.items()
+                if personaje.faccion == nombre_faccion
             ]
 
+            # Comprobamos si existe la facción escrita por el usuario, si existe muestra los personajes de esa facción y si no existe saltará un aviso
             if personajes_en_faccion:
-                print("Personajes en la facción:", nombre_faccion)
                 for nombre in personajes_en_faccion:
                     print(nombre)
             else:
-                print("No hay personajes en esa facción o la facción no existe.")
+                print("No hay personajes en esa facción o no existe.")
 
         except Exception as e:
             print(f"Error: {e}")
 
-
+    @staticmethod
+    def salir():
+        print("Has finalizado el juego")
+        exit(0)
 
 """
     tipos = ["Amigo", "Enemigo", "Neutral"]
@@ -255,16 +270,3 @@ def nueva_localizacion(personajes):
         print("Opción no válida. Por favor, elija 1 o 2.")
 """
 
-def verificar_si_input_vacio(entrada):
-    """
-       Verifica que el input no esté vacío.
-
-
-       :param entrada: str - Cadena de texto que representa el valor introducido por el usuario
-       :return: str - Devuelve el valor de entrada si no está vacío
-       :raises ValueError: Si el input está vacío, lanza un error con el mensaje "Introduce el contenido correctamente."
-    """
-    for entrada in entrada:
-        if entrada == "" or entrada == " ":
-            raise ValueError("Introduce el contenido correctamente.")
-        return entrada
