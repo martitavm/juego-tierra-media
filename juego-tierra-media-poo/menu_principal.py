@@ -1,6 +1,6 @@
 from juego_tierra_media import JuegoTierraMedia
 from batalla import Batalla
-from equipamiento import Arma
+from personaje import UtilidadesPersonaje
 def menu():
     """
        Muestra el menú principal de opciones para la gestión de personajes de la Tierra Media.
@@ -24,6 +24,7 @@ dict_personajes = {}
 dict_facciones = {}
 juego = JuegoTierraMedia(dict_personajes, dict_facciones)
 
+
 def switch_menu(opcion):
     """
     Ejecuta la acción correspondiente según la opción seleccionada en el menú.
@@ -39,15 +40,15 @@ def switch_menu(opcion):
         case 2:
             print("Has seleccionado 2. Añadir equipamiento a un personaje")
             nombre = input("Nombre del personaje: ")
-            equipo = input("Equipamiento del personaje: ")
+            UtilidadesPersonaje.mostrar_equipamiento()
+            equipo = input("Elige el arma que quieres añadir al equipamiento: ")
             juego.anadir_equipamiento(nombre, equipo)
         case 3:
             print("Has seleccionado 3. Equipar un arma a un personaje")
             nombre = input("Nombre del personaje: ")
             pnj = dict_personajes[nombre]
-            arma = Arma("Andúril", "Espada", 80, 5, 0.6)
+            arma = UtilidadesPersonaje.elegir_arma_a_equipar(pnj)
             pnj.equipar_arma(arma)
-            # Personaje.equipar_arma(arma)
         case 4:
             print("Has seleccionado 4. Establecer relaciones entre personajes")
             # return establecer_relaciones(personajes)
@@ -67,8 +68,7 @@ def switch_menu(opcion):
             Batalla.simular(p1, p2)
         case 7:
             print("Has seleccionado 7. Listar personajes por facción")
-
-            # return listar_personaje_faccion(personajes)
+            juego.listar_personaje_faccion()
         case 8:
             print("Has seleccionado 8. Buscar personajes por equipamiento")
             equipo = input("Introduce el equipo a buscar: ")
@@ -94,3 +94,5 @@ while opcion_juego != 10:
 
 # if __name__ == '__main__':
 #     juego = JuegoTierraMedia(personajes_dict={}, facciones_dict={})
+
+
