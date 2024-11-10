@@ -73,5 +73,6 @@ while opcion_juego != 10:
     except ValueError:
         print(f"Introduce un número entre 1-10.")
 
+
 if __name__ == '__main__':
     juego = JuegoTierraMedia(personajes_dict={}, facciones_dict={})
