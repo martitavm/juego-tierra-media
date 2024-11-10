@@ -38,12 +38,6 @@ class JuegoTierraMedia:
             faccion = input("Introduce la faccion que desea registrar: ")
             ubicacion = input("Introduce la ubicacion que desea registrar: ")
 
-            entradas = [nombre, raza, faccion, ubicacion]
-
-            verificar_si_input_vacio(entradas)
-
-            personaje = Personaje(nombre, raza, faccion, ubicacion)
-
             # Agregamos el personaje al diccionario, usando su nombre como clave
             self._personajes[nombre] = personaje
 
@@ -79,20 +73,7 @@ class JuegoTierraMedia:
 
         except Exception as e:
             print(f"{e}")
-
-    def buscar_personaje_equipamiento(self, nombre_equipo):
-        """
-        Función que muestra los personajes que tienen en su equipamiento el
-        arma pasada como parámetro
-        :param str nombre_equipo: Nombre del equipo a buscar
-        :return: Lista con los personajes que tienen el arma en su equipamiento.
-        """
-        lista_personaje_equipado = []
-        for pnj in self.personajes:
-            for equipo in self.personajes[pnj].equipamiento:
-                if nombre_equipo == equipo.nombre:
-                    lista_personaje_equipado.append(pnj)
-
+            
         if len(lista_personaje_equipado) == 0:
             print(f"Ningún personaje tiene {nombre_equipo}")
         else:
@@ -274,7 +255,6 @@ def nueva_localizacion(personajes):
         print("Opción no válida. Por favor, elija 1 o 2.")
 """
 
-
 def verificar_si_input_vacio(entrada):
     """
        Verifica que el input no esté vacío.
@@ -288,4 +268,3 @@ def verificar_si_input_vacio(entrada):
         if entrada == "" or entrada == " ":
             raise ValueError("Introduce el contenido correctamente.")
         return entrada
-
