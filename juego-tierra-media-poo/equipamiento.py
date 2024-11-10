@@ -58,7 +58,7 @@ class Arma(Equipamiento):
             self._probabilidad = value
 
     def __str__(self):
-        return f"Nombre: {self._nombre}, Tipo: {self._tipo}, Potencia: {self._potencia}, Alcance: {self._alcance}, Durabilidad: {self._probabilidad}."
+        return f"Nombre: {self._nombre}, Tipo: {self._tipo}, Potencia: {self._potencia}, Alcance: {self._alcance}, Probabilidad: {self._probabilidad}."
 
 
 class Armadura(Equipamiento):
