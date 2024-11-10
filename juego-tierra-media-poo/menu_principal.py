@@ -38,9 +38,6 @@ def switch_menu(opcion):
 
         case 2:
             print("Has seleccionado 2. Añadir equipamiento a un personaje")
-            nombre = input("Nombre del personaje: ")
-            equipo = input("Equipamiento del personaje: ")
-            juego.anadir_equipamiento(nombre, equipo)
         case 3:
             print("Has seleccionado 3. Equipar un arma a un personaje")
             nombre = input("Nombre del personaje: ")
@@ -50,10 +47,10 @@ def switch_menu(opcion):
             # Personaje.equipar_arma(arma)
         case 4:
             print("Has seleccionado 4. Establecer relaciones entre personajes")
-            # return establecer_relaciones(personajes)
+            return juego.establecer_relaciones()
         case 5:
             print("Has seleccionado 5. Mover un personaje a una nueva localización")
-            # return nueva_localizacion(personajes)
+            return juego.nueva_localizacion()
         case 6:
             print("Has seleccionado 6. Simular una batalla entre dos personajes")
             try:
@@ -68,7 +65,7 @@ def switch_menu(opcion):
         case 7:
             print("Has seleccionado 7. Listar personajes por facción")
 
-            # return listar_personaje_faccion(personajes)
+            return juego.listar_personaje_faccion()
         case 8:
             print("Has seleccionado 8. Buscar personajes por equipamiento")
             equipo = input("Introduce el equipo a buscar: ")
@@ -92,5 +89,6 @@ while opcion_juego != 10:
     except ValueError:
         print(f"Introduce un número entre 1-10.")
 
-# if __name__ == '__main__':
-#     juego = JuegoTierraMedia(personajes_dict={}, facciones_dict={})
+
+if __name__ == '__main__':
+    juego = JuegoTierraMedia(personajes_dict={}, facciones_dict={})
