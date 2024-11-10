@@ -73,7 +73,7 @@ El proyecto cuenta con las siguientes clases principales (mencionadas anteriorme
 | **buscar_arma_equipamiento(nombre_arma)**            | Busca un arma específica en el equipamiento de un personaje.                                  | **buscar_arma_equipamiento(nombre_arma)** Buscará el arma específica en el equipamiento.                       |
 | **elegir_arma_a_equipar(personaje)**            | Permite elegir que arma equipar al personaje.                                 | **elegir_arma_a_equipar(personaje)** Lista todas las armas en equipamiento y deja elegir cual arma quieres equipar.                      |
 | **es_arma(equipo)**            | Comprueba si el parámetro dado es un arma o no.                                 | **es_arma(equipo)** Devuelve true o false dependiendo de si el parámetro dado es un arma o no.                      |
-| **salir()**            | Permite salir del juego                                   | **salir()** Lista todos los personajes del diccionario                                     |
+| **salir()**            | Permite salir del juego                                   | **salir()** Al elegir esta opción acabará el flujo del programa                                     |
 
 
 ## Uso del Menú Interactivo:
