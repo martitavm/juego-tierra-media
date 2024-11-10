@@ -38,8 +38,6 @@ class JuegoTierraMedia:
             faccion = input("Introduce la faccion que desea registrar: ")
             ubicacion = input("Introduce la ubicacion que desea registrar: ")
 
-            personaje = Personaje(nombre, raza, faccion, ubicacion)
-
             # Agregamos el personaje al diccionario, usando su nombre como clave
             self._personajes[nombre] = personaje
 
@@ -48,138 +46,85 @@ class JuegoTierraMedia:
             print(f"Error: {e}")
 
 
-"""
-    def buscar_arma(nombre_arma):
-        
-        Busca un arma en la lista de equipamiento usando su nombre.
+    def anadir_equipamiento(self, nombre_personaje, nombre_arma):
+        """
+        Añade un arma al equipamiento de un personaje si el personaje existe y no tiene ya el arma.
 
-        :param nombre_arma: El nombre del arma que queremos encontrar. Se ignoran las mayúsculas, así que
-                            "Espada" y "espada" se consideran iguales.
-        :return: Devuelve un diccionario con la información del arma si se encuentra. Si no se encuentra,
-                 retorna un diccionario vacío.
+        Esta función recibe el nombre de un personaje y un arma. Primero, comprueba que el personaje
+        está en la lista de personajes, si no, muestra un mensaje. Luego verifica si el personaje
+        ya tiene el arma. Si no la tiene, la añade al equipamiento.
 
-        Nota: Si estás buscando un arma, asegúrate de escribir bien el nombre.
-        
-        for arma in equipamiento:
-            if arma["nombre"].lower() == nombre_arma.lower():
-                return arma
-        return {}
+        :param nombre_personaje: Nombre del personaje al que se le quiere añadir el arma.
+        :param nombre_arma: Nombre del arma que se quiere añadir al equipamiento.
+        :return: No devuelve nada, solo imprime mensajes según la situación.
 
-"""
-"""
-    def anadir_equipamiento(personajes):
-        
-        Añade un arma al equipamiento de un personaje si este existe y si no la tiene ya.
-
-        Esta función pregunta al usuario por el nombre del personaje y el nombre del arma que se
-        quiere añadir. Si el personaje no está en la lista, informa al usuario. Si el arma no existe,
-        también lo dice. Además, verifica que el personaje no tenga ya el arma en su equipamiento.
-
-        :return: No devuelve nada, pero imprime mensajes con información según la situación.
-
-        Nota: Asegúrate de que el personaje y el arma estén bien escritos, porque si no,
-              no las podrás añadir. No queremos que un elfo se quede sin su arco favorito.
-        
-
+        Nota: Es importante que los nombres estén bien escritos para evitar errores de búsqueda.
+        """
         try:
-            # Se piden el nombre del personaje al que se le va a ampliar el equipamiento y el arma que se va a añadir.
-            nombre_personaje = input("Introduce el nombre del personaje: ")
-            campo_vacio_exception(nombre_personaje)
-            if nombre_personaje.capitalize() not in personajes:
+            # Se comprueba si el personaje existe. Si existe se llama a la función anadir_equipamiento. Si no existe, se avisa.
+            if nombre_personaje in self._personajes:
+                # Obtiene el objeto del personaje y llama a su metodo para añadir el arma.
+                personaje = self._personajes[nombre_personaje]
+                personaje.anadir_equipamiento(nombre_arma)
+            else:
                 print(
                     f"\n ---> El personaje {nombre_personaje} no existe (comprueba que lo has escrito correctamente). <---\n")
                 return
 
-            print("Estas son las armas disponibles para el personaje:\n")
-            for weapon in equipamiento:
-                print(f"-> {weapon}")
-            nombre_arma = input("\nIntroduce el nombre del arma que quieres añadir: ")
-
-            # Si el personaje existe, lo almacenamos en la variable 'personaje'.
-            personaje = personajes[nombre_personaje]
-            # Se busca el arma por el nombre que el usuario ha introducido.
-            arma = buscar_arma(nombre_arma)
-
-            # Si no se encuentra el arma, se avisa al usuario.
-            if not arma:
-                print(f"\n ---> El arma {nombre_arma.capitalize()} no existe. <---\n")
-                es_moderador = input("¿Eres moderador del juego?(SI/NO)")
-                if es_moderador.upper() == "SI":
-                    respuesta = input("Eres moderador. ¿Deseas añadir este arma al equipamiento? (SI/NO): ")
-                    if respuesta.upper() == "SI":
-                        print(f"¡Genial! Vamos a añadir ese arma al equipamiento.\n")
-                        arma_nueva = ampliar_equipamiento(personajes)
-                        if arma_nueva:
-                            personaje["equipamiento"].append(arma_nueva)
-                            print(
-                                f"\n ---> El arma '{arma_nueva['nombre']}' ha sido añadida al equipamiento del personaje {nombre_personaje}. <---\n")
-                            return
-                    else:
-                        print("\n---> ¡Está bien! No se añadirá este arma al equipamiento. <---\n")
-                else:
-                    peticion = input(
-                        f"¿Deseas que los moderadores del juego añadan este arma al equipamiento? (SI/NO): ")
-                    if peticion.upper() == "SI":
-                        print(
-                            "\n---> ¡Gracias por la sugerencia! Los moderadores lo añadirán tan pronto como puedan. <---\n")
-                    if peticion.upper() == "NO":
-                        print("\n---> ¡Perfecto! Este arma no será añadida. <---\n")
-                    return
-
-            # Se comprueba si el personaje ya tiene esta arma en su equipamiento.
-            for armita in personaje["equipamiento"]:
-                if armita["nombre"].lower() == arma["nombre"].lower():
-                    print(
-                        f"\n ---> El personaje {nombre_personaje} ya tiene el arma '{armita['nombre']}' en el equipamiento. <---\n")
-                    return
-
-            # Se añade el arma al equipamiento del personaje.
-            personaje["equipamiento"].append(arma)
-            print(
-                f"\n ---> El arma '{arma['nombre']}' ha sido añadida al equipamiento del personaje {nombre_personaje}. <---\n")
-
         except Exception as e:
             print(f"{e}")
+            
+        if len(lista_personaje_equipado) == 0:
+            print(f"Ningún personaje tiene {nombre_equipo}")
+        else:
+            print(f"Personajes con {nombre_equipo.capitalize()}: \n{lista_personaje_equipado}")
+        return
 
-"""
+    def mostrar_personajes(self):
+        """
+        Función que recorre un diccionario de objetos personajes y muestra todos sus datos.
+        :return: Datos del diccionario recorrido.
+        """
+        for pnj in self.personajes:
+            print(f"Personaje: {pnj}")
+            print(f"--> Datos: {self.personajes[pnj]}")
+            print("----------------------------------")
+        return
 
-"""
-    def ampliar_equipamiento(personajes):
-        
-        Esta función es para los moderadores del juego.
+    @staticmethod
+    def salir():
+        print("Has finalizado el juego")
+        exit(0)
 
-        Registra un nuevo arma en el equipamiento pidiendo al usuario detalles sobre ella.
 
-        Esta función solicita al usuario el nombre, tipo, potencia y descripción del arma que se
-        quiere añadir. Asegura que ninguna de estas entradas esté vacía y que la potencia sea un
-        número entero. Si está correcto, añade el arma al equipamiento y lo confirma con un
-        mensaje.
+    def listar_personaje_faccion(self):
+        """
+        Muestra todos los personajes que pertenecen a una facción específica.
 
-        :return: No devuelve nada, pero imprime mensajes que indican el estado del registro del arma.
+        Solicita al usuario introducir el nombre de una facción y luego muestra una lista de personajes que
+        pertenecen a esa facción. Si la facción introducida no contiene personajes o no existe, muestra un
+        mensaje indicándolo.
+        :return: No devuelve nada
+        """
+        try:
+            nombre_faccion = input("Ingrese el nombre de la facción que desea listar: ").strip()
+            verificar_si_input_vacio(nombre_faccion)
+            personajes_en_faccion = [
+                nombre for nombre in self._personajes
+                if self._personajes[nombre].faccion and self._personajes[nombre].faccion.lower() == nombre_faccion
+            ]
 
-        Nota: Recuerda que la potencia tiene que ser un número entero. Y no olvides que un arma sin nombre
-              es como un guerrero sin espada: ¡no tiene sentido!
-        
-        campo_relleno = False
-        while not campo_relleno:
-            try:
-                nombre = input("Nombre del arma: ")
-                campo_vacio_exception(nombre)
-                tipo = input("Tipo de arma: ")
-                campo_vacio_exception(tipo)
-                potencia = int(input("Potencia: "))
-                arma_nueva = {"nombre": nombre, "tipo": tipo, "potencia": potencia}
-                equipamiento.append(arma_nueva)
-                print(f"\n---> El arma '{nombre.capitalize()}' ha sido registrada exitosamente. <---\n")
-                campo_relleno = True
-                return arma_nueva
-            except KeyboardInterrupt:
-                print("\nRegistro de armas finalizado.")
-            except ValueError:
-                print("La potencia debe ser un número entero.")
-            except Exception as e:
-                print(e)
-"""
+            if personajes_en_faccion:
+                print("Personajes en la facción:", nombre_faccion)
+                for nombre in personajes_en_faccion:
+                    print(nombre)
+            else:
+                print("No hay personajes en esa facción o la facción no existe.")
+
+        except Exception as e:
+            print(f"Error: {e}")
+
+
 
 """
     tipos = ["Amigo", "Enemigo", "Neutral"]
@@ -310,85 +255,16 @@ def nueva_localizacion(personajes):
         print("Opción no válida. Por favor, elija 1 o 2.")
 """
 
-    def listar_personaje_faccion(personajes):
-        """
-            Muestra todos los personajes que pertenecen a una facción específica.
-    
-            Solicita al usuario introducir el nombre de una facción y luego muestra una lista de personajes que
-            pertenecen a esa facción. Si la facción introducida no contiene personajes o no existe, muestra un
-            mensaje indicándolo.
-            :param personajes: dict - Diccionario de personajes, donde cada clave es un nombre de personaje y el valor es un diccionario
-            con los atributos del personaje.
-            :return: No devuelve nada
-        """
-
-        try:
-            nombre_faccion = input("Ingrese el nombre de la faccion que desea listar: ")
-            personajes_en_faccion = [
-                nombre for nombre, personaje in personajes.items()
-                if personaje.faccion.lower() == nombre_faccion.lower()
-            ]
-
-            # Comprobamos si existe la facción escrita por el usuario, si existe muestra los personajes de esa facción y si no existe saltará un aviso
-            if personajes_en_faccion:
-                for nombre in personajes_en_faccion:
-                    print(nombre)
-            else:
-                print("No hay personajes en esa facción o no existe.")
-
-        except Exception as e:
-            print(f"Error: {e}")
-            
+def verificar_si_input_vacio(entrada):
+    """
+       Verifica que el input no esté vacío.
 
 
-"""
-def buscar_personaje_equipamiento(personajes):
-    
-    Función que muestra los personajes que tienen en su equipamiento el
-    arma introducida por teclado.
-    :return: Lista con los personajes que tienen el arma en su equipamiento.
-    
-    lista_personaje_equipado = []
-    try:
-        equipo = input("Introduce el arma a buscar: ").lower()
-        campo_vacio(equipo)
-
-        for keys, values in personajes.items():
-            for arma in values["equipamiento"]:
-                if equipo in arma["nombre"].lower():
-                    lista_personaje_equipado.append(keys)
-
-        if len(lista_personaje_equipado) == 0:
-            print(f"Ningún personaje tiene {equipo}")
-        else:
-            print(f"Personajes con {equipo.capitalize()} \n{lista_personaje_equipado}")
-        return
-    except AttributeError:
-        print("Introduce el nombre del equipo")
-    except NameError:
-        print("El diccionario con datos no existe")
-    except Exception as e:
-        print(f"{e}")
-        
-"""
-"""
-def mostrar_personajes(personajes):
-    
-    Función que recorre un diccionario de personajes y muestra todos sus datos.
-    :return: Datos del diccionario recorrido.
-    
-    try:
-        for keys, values in personajes.items():
-            print(f"Personaje: {keys}")
-            for value, datos in values.items():
-                print(f"-> {value.capitalize()}: {datos}")
-            print("---------------------------------------")
-        return
-    except NameError:
-        print("El diccionario con datos no existe")
-"""
-
-
-def salir():
-    print("Has finalizado el juego")
-    exit(0)
+       :param entrada: str - Cadena de texto que representa el valor introducido por el usuario
+       :return: str - Devuelve el valor de entrada si no está vacío
+       :raises ValueError: Si el input está vacío, lanza un error con el mensaje "Introduce el contenido correctamente."
+    """
+    for entrada in entrada:
+        if entrada == "" or entrada == " ":
+            raise ValueError("Introduce el contenido correctamente.")
+        return entrada
