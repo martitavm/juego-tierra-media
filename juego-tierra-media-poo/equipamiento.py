@@ -28,12 +28,12 @@ class Equipamiento:
     def potencia(self, value):
         self._potencia = value
 
+    @staticmethod
+    def es_arma(equipo):
+       return True if isinstance(equipo, Arma) else False
+
     def __str__(self):
         return f"Nombre: {self._nombre}, Tipo: {self._tipo}, Potencia: {self._potencia}"
-
-    @classmethod
-    def es_arma(cls, nombre_arma):
-        return nombre_arma
 
 class Arma(Equipamiento):
     def __init__(self, nombre, tipo, potencia, alcance, probabilidad):
@@ -50,16 +50,15 @@ class Arma(Equipamiento):
         self._alcance = value
 
     @property
-    def durabilidad(self):
+    def probabilidad(self):
         return self._probabilidad
         
-    @durabilidad.setter
-    def durabilidad(self, value):
+    @probabilidad.setter
+    def probabilidad(self, value):
             self._probabilidad = value
 
     def __str__(self):
         return f"Nombre: {self._nombre}, Tipo: {self._tipo}, Potencia: {self._potencia}, Alcance: {self._alcance}, Probabilidad: {self._probabilidad}."
-
 
 class Armadura(Equipamiento):
     def __init__(self, nombre, tipo, potencia, defensa, peso):
@@ -85,4 +84,3 @@ class Armadura(Equipamiento):
 
     def __str__(self):
         return f"Nombre: {self._nombre}, Tipo: {self._tipo}, Potencia: {self._potencia}, Defensa: {self._defensa}, Peso: {self._peso}."
-
