@@ -255,11 +255,6 @@ def nueva_localizacion(personajes):
         print("Opción no válida. Por favor, elija 1 o 2.")
 """
 
-def verificar_si_input_vacio(entrada):
-    """
-       Verifica que el input no esté vacío.
-
-
        :param entrada: str - Cadena de texto que representa el valor introducido por el usuario
        :return: str - Devuelve el valor de entrada si no está vacío
        :raises ValueError: Si el input está vacío, lanza un error con el mensaje "Introduce el contenido correctamente."
