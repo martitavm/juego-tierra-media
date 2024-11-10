@@ -38,6 +38,10 @@ class JuegoTierraMedia:
             faccion = input("Introduce la faccion que desea registrar: ")
             ubicacion = input("Introduce la ubicacion que desea registrar: ")
 
+            entradas = [nombre, raza, faccion, ubicacion]
+
+            verificar_si_input_vacio(entradas)
+
             personaje = Personaje(nombre, raza, faccion, ubicacion)
 
             # Agregamos el personaje al diccionario, usando su nombre como clave
@@ -110,6 +114,36 @@ class JuegoTierraMedia:
     def salir():
         print("Has finalizado el juego")
         exit(0)
+
+
+    def listar_personaje_faccion(self):
+        """
+        Muestra todos los personajes que pertenecen a una facción específica.
+
+        Solicita al usuario introducir el nombre de una facción y luego muestra una lista de personajes que
+        pertenecen a esa facción. Si la facción introducida no contiene personajes o no existe, muestra un
+        mensaje indicándolo.
+        :return: No devuelve nada
+        """
+        try:
+            nombre_faccion = input("Ingrese el nombre de la facción que desea listar: ").strip()
+            verificar_si_input_vacio(nombre_faccion)
+            personajes_en_faccion = [
+                nombre for nombre in self._personajes
+                if self._personajes[nombre].faccion and self._personajes[nombre].faccion.lower() == nombre_faccion
+            ]
+
+            if personajes_en_faccion:
+                print("Personajes en la facción:", nombre_faccion)
+                for nombre in personajes_en_faccion:
+                    print(nombre)
+            else:
+                print("No hay personajes en esa facción o la facción no existe.")
+
+        except Exception as e:
+            print(f"Error: {e}")
+
+
 
 """
     tipos = ["Amigo", "Enemigo", "Neutral"]
@@ -240,32 +274,18 @@ def nueva_localizacion(personajes):
         print("Opción no válida. Por favor, elija 1 o 2.")
 """
 
-    def listar_personaje_faccion(personajes):
-        """
-            Muestra todos los personajes que pertenecen a una facción específica.
-    
-            Solicita al usuario introducir el nombre de una facción y luego muestra una lista de personajes que
-            pertenecen a esa facción. Si la facción introducida no contiene personajes o no existe, muestra un
-            mensaje indicándolo.
-            :param personajes: dict - Diccionario de personajes, donde cada clave es un nombre de personaje y el valor es un diccionario
-            con los atributos del personaje.
-            :return: No devuelve nada
-        """
 
-        try:
-            nombre_faccion = input("Ingrese el nombre de la faccion que desea listar: ")
-            personajes_en_faccion = [
-                nombre for nombre, personaje in personajes.items()
-                if personaje.faccion.lower() == nombre_faccion.lower()
-            ]
+def verificar_si_input_vacio(entrada):
+    """
+       Verifica que el input no esté vacío.
 
-            # Comprobamos si existe la facción escrita por el usuario, si existe muestra los personajes de esa facción y si no existe saltará un aviso
-            if personajes_en_faccion:
-                for nombre in personajes_en_faccion:
-                    print(nombre)
-            else:
-                print("No hay personajes en esa facción o no existe.")
 
-        except Exception as e:
-            print(f"Error: {e}")
+       :param entrada: str - Cadena de texto que representa el valor introducido por el usuario
+       :return: str - Devuelve el valor de entrada si no está vacío
+       :raises ValueError: Si el input está vacío, lanza un error con el mensaje "Introduce el contenido correctamente."
+    """
+    for entrada in entrada:
+        if entrada == "" or entrada == " ":
+            raise ValueError("Introduce el contenido correctamente.")
+        return entrada
 
