@@ -1,6 +1,7 @@
 from juego_tierra_media import JuegoTierraMedia
 from batalla import Batalla
-from equipamiento import Arma
+from personaje import UtilidadesPersonaje
+
 def menu():
     """
        Muestra el menú principal de opciones para la gestión de personajes de la Tierra Media.
@@ -38,19 +39,25 @@ def switch_menu(opcion):
 
         case 2:
             print("Has seleccionado 2. Añadir equipamiento a un personaje")
+            nombre = input("Nombre del personaje: ")
+            UtilidadesPersonaje.mostrar_equipamiento()
+            equipo = input("Elige el arma que quieres añadir al equipamiento: ")
+            juego.anadir_equipamiento(nombre, equipo)
         case 3:
             print("Has seleccionado 3. Equipar un arma a un personaje")
             nombre = input("Nombre del personaje: ")
             pnj = dict_personajes[nombre]
+            arma = UtilidadesPersonaje.elegir_arma_a_equipar(pnj)
+            pnj.equipar_arma(arma)
             arma = Arma("Andúril", "Espada", 80, 5, 0.6)
             pnj.equipar_arma(arma)
             # Personaje.equipar_arma(arma)
         case 4:
             print("Has seleccionado 4. Establecer relaciones entre personajes")
-            return juego.establecer_relaciones()
+            # return establecer_relaciones(personajes)
         case 5:
             print("Has seleccionado 5. Mover un personaje a una nueva localización")
-            return juego.nueva_localizacion()
+            # return nueva_localizacion(personajes)
         case 6:
             print("Has seleccionado 6. Simular una batalla entre dos personajes")
             try:
@@ -64,8 +71,7 @@ def switch_menu(opcion):
             Batalla.simular(p1, p2)
         case 7:
             print("Has seleccionado 7. Listar personajes por facción")
-
-            return juego.listar_personaje_faccion()
+            juego.listar_personaje_faccion()
         case 8:
             print("Has seleccionado 8. Buscar personajes por equipamiento")
             equipo = input("Introduce el equipo a buscar: ")
@@ -89,6 +95,7 @@ while opcion_juego != 10:
     except ValueError:
         print(f"Introduce un número entre 1-10.")
 
+# if __name__ == '__main__':
+#     juego = JuegoTierraMedia(personajes_dict={}, facciones_dict={})
 
-if __name__ == '__main__':
-    juego = JuegoTierraMedia(personajes_dict={}, facciones_dict={})
+
