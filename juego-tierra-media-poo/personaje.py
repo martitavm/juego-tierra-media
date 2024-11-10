@@ -429,3 +429,4 @@ class UtilidadesPersonaje:
             equipamiento_str += f"->[{str(arma)}]\n"
         print(f"{equipamiento_str}")
         return equipamiento_str
+

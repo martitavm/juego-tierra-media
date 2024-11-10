@@ -270,5 +270,3 @@ def nueva_localizacion(personajes):
         print("Opción no válida. Por favor, elija 1 o 2.")
 """
 
-
-

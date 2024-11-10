@@ -1,6 +1,7 @@
 from juego_tierra_media import JuegoTierraMedia
 from batalla import Batalla
 from personaje import UtilidadesPersonaje
+
 def menu():
     """
        Muestra el menú principal de opciones para la gestión de personajes de la Tierra Media.
@@ -23,7 +24,6 @@ def menu():
 dict_personajes = {}
 dict_facciones = {}
 juego = JuegoTierraMedia(dict_personajes, dict_facciones)
-
 
 def switch_menu(opcion):
     """
@@ -49,6 +49,9 @@ def switch_menu(opcion):
             pnj = dict_personajes[nombre]
             arma = UtilidadesPersonaje.elegir_arma_a_equipar(pnj)
             pnj.equipar_arma(arma)
+            arma = Arma("Andúril", "Espada", 80, 5, 0.6)
+            pnj.equipar_arma(arma)
+            # Personaje.equipar_arma(arma)
         case 4:
             print("Has seleccionado 4. Establecer relaciones entre personajes")
             # return establecer_relaciones(personajes)
