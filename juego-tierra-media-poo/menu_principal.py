@@ -1,5 +1,4 @@
 from juego_tierra_media import JuegoTierraMedia
-
 def menu():
     """
        Muestra el menú principal de opciones para la gestión de personajes de la Tierra Media.
@@ -29,7 +28,7 @@ def switch_menu(opcion):
     match opcion:
         case 1:
             print("Has seleccionado 1. Registrar un nuevo personaje")
-            # return registrar_personaje(personajes)
+            return juego.registrar_personaje()
 
         case 2:
             print("Has seleccionado 2. Añadir equipamiento a un personaje")
@@ -71,3 +70,6 @@ while opcion_juego != 10:
         switch_menu(opcion_juego)
     except ValueError:
         print(f"Introduce un número entre 1-10.")
+
+if __name__ == '__main__':
+    juego = JuegoTierraMedia(personajes_dict={}, facciones_dict={})
