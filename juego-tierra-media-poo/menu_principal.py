@@ -35,32 +35,34 @@ def switch_menu(opcion):
 
         case 2:
             print("Has seleccionado 2. Añadir equipamiento a un personaje")
-            # return anadir_equipamiento(personajes)
+            nombre_personaje = input("Introduce el nombre del personaje que desea añadirle el equipamiento: ")
+            nombre_arma = input("Introduce el arma que desea añadir: ")
+            return juego.anadir_equipamiento(nombre_personaje, nombre_arma)
         case 3:
             print("Has seleccionado 3. Equipar un arma a un personaje")
             # return equipar_arma(personajes)
         case 4:
             print("Has seleccionado 4. Establecer relaciones entre personajes")
-            # return establecer_relaciones(personajes)
+            return juego.establecer_relaciones()
         case 5:
             print("Has seleccionado 5. Mover un personaje a una nueva localización")
-            # return nueva_localizacion(personajes)
+            return juego.nueva_localizacion()
         case 6:
             print("Has seleccionado 6. Simular una batalla entre dos personajes")
             # return simular_batalla(personajes)
         case 7:
             print("Has seleccionado 7. Listar personajes por facción")
 
-            # return listar_personaje_faccion(personajes)
+            return juego.listar_personaje_faccion()
         case 8:
             print("Has seleccionado 8. Buscar personajes por equipamiento")
             # return buscar_personaje_equipamiento(personajes)
         case 9:
             print("Has seleccionado 9. Mostrar todos los personajes")
-            # return mostrar_personajes(personajes)
+            return juego.mostrar_personajes()
         case 10:
             print("Has seleccionado 10. Salir")
-            # return salir()
+            return juego.salir()
         case _:
             print("Opción no válida")
 
