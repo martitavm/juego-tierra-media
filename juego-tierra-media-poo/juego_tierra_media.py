@@ -142,6 +142,7 @@ class JuegoTierraMedia:
             print(f"{e}")
 
 """
+
 """
     def ampliar_equipamiento(personajes):
         
