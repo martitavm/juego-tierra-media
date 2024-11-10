@@ -82,6 +82,40 @@ class JuegoTierraMedia:
         except Exception as e:
             print(f"{e}")
 
+    def buscar_personaje_equipamiento(self, nombre_equipo):
+        """
+        Función que muestra los personajes que tienen en su equipamiento el
+        arma pasada como parámetro
+        :param str nombre_equipo: Nombre del equipo a buscar
+        :return: Lista con los personajes que tienen el arma en su equipamiento.
+        """
+        lista_personaje_equipado = []
+        for pnj in self.personajes:
+            for equipo in self.personajes[pnj].equipamiento:
+                if nombre_equipo == equipo.nombre:
+                    lista_personaje_equipado.append(pnj)
+
+        if len(lista_personaje_equipado) == 0:
+            print(f"Ningún personaje tiene {nombre_equipo}")
+        else:
+            print(f"Personajes con {nombre_equipo.capitalize()}: \n{lista_personaje_equipado}")
+        return
+
+    def mostrar_personajes(self):
+        """
+        Función que recorre un diccionario de objetos personajes y muestra todos sus datos.
+        :return: Datos del diccionario recorrido.
+        """
+        for pnj in self.personajes:
+            print(f"Personaje: {pnj}")
+            print(f"--> Datos: {self.personajes[pnj]}")
+            print("----------------------------------")
+        return
+
+    @staticmethod
+    def salir():
+        print("Has finalizado el juego")
+        exit(0)
 
 """
     tipos = ["Amigo", "Enemigo", "Neutral"]
@@ -244,54 +278,3 @@ def nueva_localizacion(personajes):
             print(f"Error: {e}")
             
 """
-
-"""
-def buscar_personaje_equipamiento(personajes):
-    
-    Función que muestra los personajes que tienen en su equipamiento el
-    arma introducida por teclado.
-    :return: Lista con los personajes que tienen el arma en su equipamiento.
-    
-    lista_personaje_equipado = []
-    try:
-        equipo = input("Introduce el arma a buscar: ").lower()
-        campo_vacio(equipo)
-
-        for keys, values in personajes.items():
-            for arma in values["equipamiento"]:
-                if equipo in arma["nombre"].lower():
-                    lista_personaje_equipado.append(keys)
-
-        if len(lista_personaje_equipado) == 0:
-            print(f"Ningún personaje tiene {equipo}")
-        else:
-            print(f"Personajes con {equipo.capitalize()} \n{lista_personaje_equipado}")
-        return
-    except AttributeError:
-        print("Introduce el nombre del equipo")
-    except NameError:
-        print("El diccionario con datos no existe")
-    except Exception as e:
-        print(f"{e}")
-        
-"""
-"""
-def mostrar_personajes(personajes):
-    
-    Función que recorre un diccionario de personajes y muestra todos sus datos.
-    :return: Datos del diccionario recorrido.
-    
-    try:
-        for keys, values in personajes.items():
-            print(f"Personaje: {keys}")
-            for value, datos in values.items():
-                print(f"-> {value.capitalize()}: {datos}")
-            print("---------------------------------------")
-        return
-    except NameError:
-        print("El diccionario con datos no existe")
-"""
-
-
-def salir():
-    print("Has finalizado el juego")
