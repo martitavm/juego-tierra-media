@@ -50,15 +50,36 @@ def switch_menu(opcion):
             pnj = dict_personajes[nombre]
             arma = UtilidadesPersonaje.elegir_arma_a_equipar(pnj)
             pnj.equipar_arma(arma)
-            arma = Arma("Andúril", "Espada", 80, 5, 0.6)
-            pnj.equipar_arma(arma)
-            # Personaje.equipar_arma(arma)
+
         case 4:
             print("Has seleccionado 4. Establecer relaciones entre personajes")
-            return juego.establecer_relaciones()
+            nombre_personaje = input("Nombre del personaje: ")
+            personaje = dict_personajes.get(nombre_personaje)  # Obtener el objeto Personaje del diccionario
+
+            if personaje:  # Verificar si el personaje existe
+                personajes_relacion = input("Personaje a relacionar: ")
+                personaje_relacion = dict_personajes.get(personajes_relacion)  # Obtener el objeto del personaje relacionado
+
+                if personaje_relacion:  # Verificar si el personaje relacionado existe
+                    tipo = input("Tipo de relación: ").capitalize()
+                    nivel_confianza = int(input("Nivel de relación (1-10): "))
+
+                    return juego.establecer_relacion(personaje, personaje_relacion, tipo, nivel_confianza)
+                else:
+                    print(f"El personaje '{personajes_relacion}' no existe.")
+            else:
+                print(f"El personaje '{nombre_personaje}' no existe.")
+
+
         case 5:
             print("Has seleccionado 5. Mover un personaje a una nueva localización")
-            return juego.nueva_localizacion()
+            try:
+                nombre_personaje = input("Nombre del personaje: ")
+                p1 = dict_personajes[nombre_personaje]
+                nueva_ubicacion = input("Indique la ubicaion: ")
+                return juego.nueva_ubicacion(p1, nueva_ubicacion)
+            except KeyError:
+                print(f"El personaje '{nombre_personaje}' no existe.")
         case 6:
             print("Has seleccionado 6. Simular una batalla entre dos personajes")
             try:
