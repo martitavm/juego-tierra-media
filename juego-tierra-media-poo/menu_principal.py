@@ -49,9 +49,6 @@ def switch_menu(opcion):
             pnj = dict_personajes[nombre]
             arma = UtilidadesPersonaje.elegir_arma_a_equipar(pnj)
             pnj.equipar_arma(arma)
-            arma = Arma("Andúril", "Espada", 80, 5, 0.6)
-            pnj.equipar_arma(arma)
-            # Personaje.equipar_arma(arma)
         case 4:
             print("Has seleccionado 4. Establecer relaciones entre personajes")
             # return establecer_relaciones(personajes)
@@ -94,8 +91,3 @@ while opcion_juego != 10:
         switch_menu(opcion_juego)
     except ValueError:
         print(f"Introduce un número entre 1-10.")
-
-# if __name__ == '__main__':
-#     juego = JuegoTierraMedia(personajes_dict={}, facciones_dict={})
-
-

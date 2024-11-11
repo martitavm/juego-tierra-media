@@ -1,6 +1,5 @@
 from personaje import Personaje
 
-
 class JuegoTierraMedia:
     def __init__(self, personajes_dict, facciones_dict):
         self._personajes = personajes_dict
@@ -102,7 +101,8 @@ class JuegoTierraMedia:
         """
         for pnj in self.personajes:
             print(f"Personaje: {pnj}")
-            print(f"--> Datos: {self.personajes[pnj]}")
+            for key, value in self.personajes[pnj].__dict__.items():
+                print(f"--> {key.replace("_", "", 1).capitalize()} : {value}")
             print("----------------------------------")
         return
 
