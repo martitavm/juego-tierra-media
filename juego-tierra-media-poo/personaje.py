@@ -1,4 +1,5 @@
 from equipamiento import Arma
+from relacion import Relacion
 class Personaje:
     def __init__(self, nombre, raza, faccion, ubicacion):
         self._nombre = nombre
@@ -199,129 +200,42 @@ class Personaje:
         except Exception as e:
             print(f"{e}")
 
-        # Metodo establecer relacion
-        def establecer_relaciones(personajes):
+            # Metodo establecer relacion
+    def establecer_relaciones(self, personaje_relacion, tipo, nivel_confianza):
             """
-              Función para establecer o actualizar relaciones entre personajes.
+                   Función para establecer o actualizar relaciones entre personajes.
+                   :param personaje_relacion: El objeto del personaje con el cual se establece la relación.
+                   :param tipo: Tipo de relación entre personajes ('Amigo', 'Neutral', 'Enemigo').
+                   :param nivel_confianza: Nivel de confianza (1-10).
+                   """
+            tipos = ["Amigo", "Neutral", "Enemigo"]
 
-              Solicita al usuario que ingrese el nombre de un personaje principal y otro personaje con el cual
-              establecerá una relación.
-
-              Entradas:
-              - personaje (str): Nombre del personaje que establece la relación.
-              - personaje_relacion (str): Nombre del personaje con el cual se establece la relación.
-              - tipo (str): Tipo de relación entre personajes. Debe ser uno de los valores en `tipos`.
-              - nivel_confianza (int): Nivel de confianza o enemistad en un rango de 1 a 10.
-
-              Reglas de Validación:
-              1. El nombre de los personajes deben ser cadenas de texto.
-              2. El tipo de relación debe estar en `tipos`: 'Amigo', 'Enemigo' o 'Neutral'.
-              3. El nivel de confianza debe ser un entero entre 1 y 10.
-
-              """
-
-            personaje = input("Ingrese el personaje que va a establecer una relacion: ")
-            personaje_relacion = input("Ingrese el nombre del personaje a relacionar: ")
-            tipo = input(f"Ingrese el tipo de relaciones ({tipos}): ")
-            nivel_confianza = int(input("Indique el nivel de confianza (1-10): "))
-
-            # Verificar tipos de entrada
-            if type(personaje) != str:
-                print("Tipo de personaje incorrecto")
-                return
-            elif type(personaje_relacion) != str:
-                print("Tipo de personaje-relación incorrecto")
-                return
-            elif tipo not in tipos:
-                print("Tipo de relación inexistente, tipos: 'Amigo', 'Enemigo', 'Neutral'")
-                return
-            elif type(nivel_confianza) != int or not (nivel_confianza > 1 or nivel_confianza < 10):
-                print("Nivel de confianza incorrecto, tiene que ser un número entre 1 y 10")
+            # Verificar si el tipo de relación es válido
+            if tipo not in tipos:
+                print(f"Tipo de relación no válido. Opciones válidas: {tipos}")
                 return
 
-            # Verificar que ambos personajes existen
-            if personaje in personajes and personaje_relacion in personajes:
+            # Verificar que el nivel de confianza sea válido
+            if not (1 <= nivel_confianza <= 10):
+                print("El nivel de confianza debe estar entre 1 y 10.")
+                return
 
-                relacion_actualizada = False
+            # Crear una nueva relación (suponiendo que 'Relacion' es una clase que ya tienes definida)
+            relacion = Relacion(personaje_relacion, tipo, nivel_confianza)
 
-                for relacion in personajes[personaje]["relaciones"]:
-                    if relacion["personaje"] == personaje_relacion:
-                        # Si ya existe la relación, actualizamos
-                        relacion["tipo"] = tipo
-                        relacion["nivel_confianza"] = nivel_confianza
-                        relacion_actualizada = True
-                        print(f"Relación actualizada entre {personaje} y {personaje_relacion}")
-                        break
+            # Agregar la relación a la lista de relaciones del personaje
+            self.relaciones.append(relacion)
+            print(
+                f"Relación de tipo '{tipo}' con {personaje_relacion.nombre} establecida con nivel de confianza {nivel_confianza}.")
+        # Metodo mover
 
-                # Si no se encontró la relación, agregar una nueva
-                if not relacion_actualizada:
-                    nueva_relacion = {
-                        "personaje": personaje_relacion,
-                        "tipo": tipo,
-                        "nivel_confianza": nivel_confianza
-                    }
-                    personajes[personaje]["relaciones"].append(nueva_relacion)
-                    print(f"Relación nueva añadida entre {personaje} y {personaje_relacion}")
-            else:
-                print("Uno o ambos personajes no existen en el diccionario.")
+    def nueva_localizacion(self,nueva_ubicacion):
 
-    # Metodo mover
-    def nueva_localizacion(personajes):
-        """
-       Actualiza o añade la ubicación de un personaje en el diccionario `personajes`.
+        self.ubicacion = nueva_ubicacion
+        print(f"La nueva ubicación de {self._nombre} es {self._ubicacion}")
 
-       Solicita al usuario un personaje y permite:
-       1. Moverlo a una ubicación existente.
-       2. Añadir una nueva ubicación y mover al personaje allí.
 
-       Entradas:
-       - personaje (str): Nombre del personaje.
-       - opcion (str): '1' para mover, '2' para añadir nueva ubicación.
-
-       Actualiza:
-       - `personajes[personaje]["ubicacion"]` con la ubicación seleccionada.
-       - `localizaciones` si se añade una ubicación nueva.
-        """
-
-        while True:
-            personaje = input("Ingrese el nombre del personaje: ")
-
-            # Verificar si el personaje existe
-            if personaje in personajes:
-                break
-            else:
-                print("Este personaje no existe. Por favor, ingrese un nombre válido.")
-
-        opcion = input("¿Qué desea? 1. Mover ubicación o 2. Añadir una ubicación: ")
-
-        # Lista de ubicaciones conocidas
-        localizaciones = ["Rivendel", "Hobbiton", "Minas Tirith", "Mordor", "Isengard", "Bosque Negro", "Lothlórien"]
-
-        if opcion == "1":
-            # Mover a una ubicación existente
-            nueva_ubicacion = input(f"Las ubicaciones son {localizaciones}. Indique a dónde desea mover el personaje: ")
-
-            if nueva_ubicacion in localizaciones:
-
-                personajes[personaje]["ubicacion"] = nueva_ubicacion
-                print(f"{personaje} ha sido movido a {nueva_ubicacion}.")
-            else:
-                print("Ubicación no válida. Por favor, elija una de las ubicaciones listadas.")
-
-        elif opcion == "2":
-            # Añadir una nueva ubicación
-            ubicacion_nueva = input("Indique la nueva ubicación: ")
-
-            if ubicacion_nueva not in localizaciones:
-                # Agrega la nueva ubicación a la lista de localizaciones
-                localizaciones.append(ubicacion_nueva)
-                personajes[personaje]["ubicacion"] = ubicacion_nueva
-                print(f"{ubicacion_nueva} ha sido añadida a las ubicaciones y {personaje} ha sido movido allí.")
-            else:
-                print(f"La ubicación {ubicacion_nueva} ya existe en la lista de ubicaciones conocidas.")
-
-        else:
-            print("Opción no válida. Por favor, elija 1 o 2.")
+        # Metodo obtener potencia arma
 
     # Metodo obtener potencia arma
     def obtener_potencia_arma(self, _arma_equipada):
