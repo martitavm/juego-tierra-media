@@ -1,4 +1,4 @@
-# Juego Tierra Media
+# Juego Tierra Media(POO)
 > Bienvenidos al Juego de la Tierra Media, donde puedes manejar a personajes de la 
 Tierra Media y darles una vida llena de acción, drama y un equipamiento de lujo.
 > 
@@ -153,8 +153,8 @@ Este flujo se ha realizado hasta asegurarnos de que el proyecto funciona correct
 | Registrar Personaje               |          |          | &#x2714; |           |
 | Añadir Equipamiento               | &#x2714; |          |          |           |
 | Equipar Arma                      | &#x2714; |          |          |           |
-| Establecer Relaciones             |          |    -     |          |           |
-| Nueva Localización                |          |    -     |          |           |
+| Establecer Relaciones             |          | &#x2714; |          |           |
+| Nueva Localización                |          | &#x2714; |          |           |
 | Simular Batalla                   |          |          |          | &#x2714;  |
 | Listar Personajes por Facción     |          |          | &#x2714; |           |
 | Buscar Personaje por Equipamiento |          |          |          | &#x2714;  |
@@ -169,7 +169,7 @@ Este flujo se ha realizado hasta asegurarnos de que el proyecto funciona correct
 | Documentación                     | &#x2714; |          | &#x2714; |           |
 
 ![](forodo.gif)
-=======
+
 # Juego Tierra Media
 > Bienvenidos al Juego de la Tierra Media, donde puedes manejar a personajes de la 
 Tierra Media y darles una vida llena de acción, drama y un equipamiento de lujo.
