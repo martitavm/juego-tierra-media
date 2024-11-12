@@ -78,24 +78,13 @@ def switch_menu(opcion):
             except KeyError:
                 print(f"El personaje '{nombre_personaje}' no existe.")
         case 6:
-            print("Has seleccionado 6. Simular una batalla entre dos personajes")
-            try:
-                nombre_p1 = input("Nombre del personaje: ").capitalize()
-                p1 = dict_personajes[nombre_p1]
-                nombre_p2 = input("Nombre del personaje: ").capitalize()
-                p2 = dict_personajes[nombre_p2]
-            except KeyError:
-                print("Parece que uno de los personajes no existe, prueba de nuevo.")
-                return
-            Batalla.simular(p1, p2)
+            _case_simular_batalla()
         case 7:
             print("Has seleccionado 7. Listar personajes por facción")
             juego.listar_personaje_faccion()
 
         case 8:
-            print("Has seleccionado 8. Buscar personajes por equipamiento")
-            equipo = input("Introduce el equipo a buscar: ")
-            juego.buscar_personaje_equipamiento(equipo)
+            _case_buscar_pnj_equipo()
         case 9:
             print("Has seleccionado 9. Mostrar todos los personajes")
             juego.mostrar_personajes()
@@ -104,6 +93,26 @@ def switch_menu(opcion):
             juego.salir()
         case _:
             print("Opción no válida")
+
+
+
+def _case_simular_batalla():
+    print("Has seleccionado 6. Simular una batalla entre dos personajes")
+    try:
+        nombre_p1 = input("Nombre del personaje: ").capitalize()
+        p1 = dict_personajes[nombre_p1]
+        nombre_p2 = input("Nombre del personaje: ").capitalize()
+        p2 = dict_personajes[nombre_p2]
+    except KeyError:
+        print("Parece que uno de los personajes no existe, prueba de nuevo.")
+        return
+    Batalla.simular(p1, p2)
+
+
+def _case_buscar_pnj_equipo():
+    print("Has seleccionado 8. Buscar personajes por equipamiento")
+    equipo = input("Introduce el equipo a buscar: ")
+    juego.buscar_personaje_equipamiento(equipo)
 
 
 if __name__ == '__main__':
