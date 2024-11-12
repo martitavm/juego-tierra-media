@@ -168,7 +168,7 @@ Este flujo se ha realizado hasta asegurarnos de que el proyecto funciona correct
 | Clase Relacion                    |          | &#x2714; |          |           |
 | Documentación                     | &#x2714; |          | &#x2714; |           |
 
-![](forodo.gif)
+![](aragón.gif)
 
 # Juego Tierra Media
 > Bienvenidos al Juego de la Tierra Media, donde puedes manejar a personajes de la 
