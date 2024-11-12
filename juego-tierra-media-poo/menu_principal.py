@@ -2,6 +2,7 @@ from juego_tierra_media import JuegoTierraMedia
 from batalla import Batalla
 from personaje import UtilidadesPersonaje
 
+
 def menu():
     """
        Muestra el menú principal de opciones para la gestión de personajes de la Tierra Media.
@@ -20,10 +21,6 @@ def menu():
     print("9. Mostrar todos los personajes")
     print("10. Salir")
 
-
-dict_personajes = {}
-dict_facciones = {}
-juego = JuegoTierraMedia(dict_personajes, dict_facciones)
 
 def switch_menu(opcion):
     """
@@ -58,7 +55,8 @@ def switch_menu(opcion):
 
             if personaje:  # Verificar si el personaje existe
                 personajes_relacion = input("Personaje a relacionar: ")
-                personaje_relacion = dict_personajes.get(personajes_relacion)  # Obtener el objeto del personaje relacionado
+                personaje_relacion = dict_personajes.get(
+                    personajes_relacion)  # Obtener el objeto del personaje relacionado
 
                 if personaje_relacion:  # Verificar si el personaje relacionado existe
                     tipo = input("Tipo de relación: ").capitalize()
@@ -69,7 +67,6 @@ def switch_menu(opcion):
                     print(f"El personaje '{personajes_relacion}' no existe.")
             else:
                 print(f"El personaje '{nombre_personaje}' no existe.")
-
 
         case 5:
             print("Has seleccionado 5. Mover un personaje a una nueva localización")
@@ -109,15 +106,17 @@ def switch_menu(opcion):
             print("Opción no válida")
 
 
-opcion_juego = -1
-while opcion_juego != 10:
-    try:
-        menu()
-        opcion_juego = int(input("---Selecciona una de las opciones jugador/a ---> "))
-        switch_menu(opcion_juego)
-    except ValueError:
-        print(f"Introduce un número entre 1-10.")
+if __name__ == '__main__':
 
+    dict_personajes = {}
+    dict_facciones = {}
+    juego = JuegoTierraMedia(dict_personajes, dict_facciones)
 
-# if __name__ == '__main__':
-#     juego = JuegoTierraMedia(personajes_dict={}, facciones_dict={})
+    opcion_juego = -1
+    while opcion_juego != 10:
+        try:
+            menu()
+            opcion_juego = int(input("---Selecciona una de las opciones jugador/a ---> "))
+            switch_menu(opcion_juego)
+        except ValueError:
+            print(f"Introduce un número entre 1-10.")
