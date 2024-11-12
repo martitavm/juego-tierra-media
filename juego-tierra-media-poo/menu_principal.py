@@ -35,18 +35,10 @@ def switch_menu(opcion):
             juego.registrar_personaje()
 
         case 2:
-            print("Has seleccionado 2. Añadir equipamiento a un personaje")
-            nombre = input("Nombre del personaje: ")
-            UtilidadesPersonaje.mostrar_equipamiento()
-            equipo = input("Elige el arma que quieres añadir al equipamiento: ")
-            juego.anadir_equipamiento(nombre, equipo)
+            _case_anadir_equipamiento()
 
         case 3:
-            print("Has seleccionado 3. Equipar un arma a un personaje")
-            nombre = input("Nombre del personaje: ")
-            pnj = dict_personajes[nombre]
-            arma = UtilidadesPersonaje.elegir_arma_a_equipar(pnj)
-            pnj.equipar_arma(arma)
+            _case_equipar_arma()
 
         case 4:
             print("Has seleccionado 4. Establecer relaciones entre personajes")
@@ -104,6 +96,22 @@ def switch_menu(opcion):
             juego.salir()
         case _:
             print("Opción no válida")
+
+
+def _case_equipar_arma():
+    print("Has seleccionado 3. Equipar un arma a un personaje")
+    nombre = input("Nombre del personaje: ")
+    pnj = dict_personajes[nombre]
+    arma = UtilidadesPersonaje.elegir_arma_a_equipar(pnj)
+    pnj.equipar_arma(arma)
+
+
+def _case_anadir_equipamiento():
+    print("Has seleccionado 2. Añadir equipamiento a un personaje")
+    nombre = input("Nombre del personaje: ")
+    UtilidadesPersonaje.mostrar_equipamiento()
+    equipo = input("Elige el arma que quieres añadir al equipamiento: ")
+    juego.anadir_equipamiento(nombre, equipo)
 
 
 if __name__ == '__main__':
