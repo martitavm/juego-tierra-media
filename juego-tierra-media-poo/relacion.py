@@ -35,3 +35,6 @@ class Relacion:
          self._nivel_confianza = nivel_confianza
         else:
             raise ValueError("EL nivel de confianza tiene que ser: 1-10")
+
+    def __str__(self):
+        return f"Personaje: {self._personaje}, Tipo: {self._tipo}, Nivel de confianza: {self._nivel_confianza}"
