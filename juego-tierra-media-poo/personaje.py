@@ -85,7 +85,11 @@ class Personaje:
         for weapon in self._equipamiento:
             equipamiento_str += f"[{str(weapon)}]"
 
-        return f"Nombre: {self._nombre}, Raza: {self._raza}, Facción: {self._faccion}, Ubicacion: {self._ubicacion}, Equipamiento: {equipamiento_str}, Relaciones: {self._relaciones}, Arma Equipada: [{self._arma_equipada}]"
+        relaciones_str = ""
+        for relacion in self._relaciones:
+            relaciones_str += f"[{str(relacion)}]"
+
+        return f"Nombre: {self._nombre}, Raza: {self._raza}, Facción: {self._faccion}, Ubicacion: {self._ubicacion}, Equipamiento: {equipamiento_str}, Relaciones: {relaciones_str}, Arma Equipada: [{self._arma_equipada}]"
 
     # Metodo añadir equipamiento
 
@@ -221,7 +225,7 @@ class Personaje:
                 return
 
             # Crear una nueva relación (suponiendo que 'Relacion' es una clase que ya tienes definida)
-            relacion = Relacion(personaje_relacion, tipo, nivel_confianza)
+            relacion = Relacion(personaje_relacion.nombre, tipo, nivel_confianza)
 
             # Agregar la relación a la lista de relaciones del personaje
             self.relaciones.append(relacion)
